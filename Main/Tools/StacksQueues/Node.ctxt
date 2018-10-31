@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Node
+comment0.text=\r\nWas\ not\ sure\ if\ we\ could\ edit\ this\ file\ but\ since\ there\ was\ nothing\ in\ this\ file\ that\r\nsaid\ otherwise,\ I\ assumed\ we\ could.\r\n\r\nI\ changed\ "getLink"\ to\ "getNext"\ because\ it\ made\ programming\ the\ List\ class\ much\ easier\ and\ much\ more\ coherent\ for\ me.\ \r\nI\ need\ variables\ and\ methods\ to\ tell\ me\ exactly\ what\ they\ do\ for\ me\ to\ remember/understand\ how\ to\ use\ them.\r\nSo\ Curr.getNext()\ to\ refer\ to\ the\ next\ element\ in\ the\ linked\ list\ made\ so\ much\ more\ sense\ to\ me\r\nthan\ Curr.getLink()\ did.\ Some\ reason,\ using\ Curr.getLink()\ really\ confused\ me\ at\ the\ start\ so\ it\ had\ to\ change.\r\n\r\nAlso\ added\ a\ constuctor\ that\ took\ data\ and\ a\ link,\ which\ was\ primarily\ for\ insertAfter/insertBefore.\r\n
+comment1.params=
+comment1.target=Node()
+comment2.params=data\ link
+comment2.target=Node(java.lang.Object,\ Node)
+comment3.params=
+comment3.target=java.lang.Object\ getData()
+comment4.params=data
+comment4.target=void\ setData(java.lang.Object)
+comment5.params=
+comment5.target=Node\ getNext()
+comment6.params=link
+comment6.target=void\ setLink(Node)
+numComments=7
