@@ -20,7 +20,7 @@ public class Library
         return new String(new char[count]).replace("\0", with);
     }
 
-	public void printLibrary()
+	public String[][] printLibrary()
 	{
 		String[][] library = new String[books.GetSize()][4];
 		String winTitle = "";
@@ -60,6 +60,8 @@ public class Library
             }
             System.out.println(" ");
         }
+        
+        return library;
 	}
 
 	public boolean Contains(String token, String key, List<Book> books)
