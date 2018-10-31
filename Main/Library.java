@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 public class Library
 {
-	static List<Book> books = new List<Book>();
+	public static List<Book> books = new List<Book>();
+	public static String largestTitle;
+	public static String largestAuthor;
 	static Tools tools = new Tools();
 	static SearchSort mod = new SearchSort();
 
@@ -22,9 +24,14 @@ public class Library
 
 	public String[][] printLibrary()
 	{
+		return printLibrary(true);
+	}
+	
+	public String[][] printLibrary(boolean print)
+	{
 		String[][] library = new String[books.GetSize()][4];
-		String winTitle = "";
-		String winAuthor = "";
+		largestTitle = "";
+		largestAuthor = "";
 		String currAuthor;
 		String currTitle;
 
@@ -36,29 +43,29 @@ public class Library
 			library[i][2] = Integer.toString(books.GetValue().getStatus());
 			library[i][3] = Integer.toString(books.GetValue().getImportance());
 
-			if(currTitle.length() > winTitle.length()) winTitle = currTitle;
-			if(currAuthor.length() > winAuthor.length()) winAuthor = currAuthor;
+			if(currTitle.length() > largestTitle.length()) largestTitle = currTitle;
+			if(currAuthor.length() > largestAuthor.length()) largestAuthor = currAuthor;
 		}
 
-		System.out.println("Title:" + repeat(winTitle.length() - "Titles:".length() + 3, " ") +
-						   "Author:" + repeat(winAuthor.length() - "Author:".length() + 1, " ") +
-						   "Checked In/Out:    Importance:\n");
+		if(print) System.out.println("Title:" + repeat(largestTitle.length() - "Titles:".length() + 3, " ") +
+									 "Author:" + repeat(largestAuthor.length() - "Author:".length() + 1, " ") +
+									 "Checked In/Out:    Importance:\n");
 		//prints 2d array
         for(int i=0; i<library.length; i++)
         {
             for(int k=0; k<4; k++)
             {
 				String spacing = " ";
-				if(k == 0) spacing = repeat(winTitle.length() - library[i][k].length() + 2, " ");
-				if(k == 1) spacing = repeat(winAuthor.length() - library[i][k].length() + 1, " ");
+				if(k == 0) spacing = repeat(largestTitle.length() - library[i][k].length() + 2, " ");
+				if(k == 1) spacing = repeat(largestAuthor.length() - library[i][k].length() + 1, " ");
 				if(k == 2) {spacing = repeat("Checked In/Out:".length() - library[i][k].length() + 2, " ");
 					        if(library[i][k].equals("1")) library[i][k] = "In ";
 							if(library[i][k].equals("0")) library[i][k] = "Out";
 							}
 
-				System.out.print(library[i][k] + spacing);
+				if(print) System.out.print(library[i][k] + spacing);
             }
-            System.out.println(" ");
+            if(print) System.out.println(" ");
         }
         
         return library;
