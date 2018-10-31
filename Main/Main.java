@@ -41,7 +41,7 @@ public class Main
 				int a = 0;
 				while (a == 0 || a == 1 || a == 2 || a == 3 || a == 4)
 				{
-					Object[] options2 = {"Sort","Search", "Check in ", "Check out", "Emergancy", "Back"};
+					Object[] options2 = {"Sort","Search", "Check in ", "Check out", "Emergency", "Back"};
 					a = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrater", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 					if (a == 0)
 					{
@@ -53,13 +53,14 @@ public class Main
 							String[][]rowData = library.printLibrary(false);
 							Object[]colName = {"Author","Title","Status","Importance"};
 								JTable table = new JTable(rowData, colName);
+								table.setSize(1000, 1000);
 								javax.swing.table.TableColumn column = null;
 								for (int b = 0; b < 4; b++) 
 								{
 									column = table.getColumnModel().getColumn(b);
 									if (b == 0) 
 									{
-										column.setPreferredWidth(library.largestTitle.length() + 100); //First column is bigger
+										column.setPreferredWidth(library.largestTitle.length() + 250); //First column is bigger
 									} 
 									else if (b == 1)
 									{
@@ -67,7 +68,7 @@ public class Main
 									}
 									else 
 									{
-										column.setPreferredWidth(50);
+										column.setPreferredWidth(60);
 									}
 								}
 								JOptionPane.showMessageDialog(null, new JScrollPane(table));
@@ -130,6 +131,7 @@ public class Main
 					{
 						String input = JOptionPane.showInputDialog("Enter book title");
 						JFrame frame = new JFrame();
+						frame.setSize(500, 500);
 						int result = JOptionPane.showConfirmDialog(frame, "Are you sure?");
 						System.out.print(result);
 					}
