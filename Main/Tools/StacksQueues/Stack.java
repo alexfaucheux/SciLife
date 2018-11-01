@@ -1,4 +1,4 @@
-package Tools.StacksQueues;  
+package Tools.StacksQueues;
 
 
 public class Stack<Type> extends List
@@ -8,17 +8,24 @@ public class Stack<Type> extends List
 		super.Last();
 		super.InsertAfter(data);
 	}
-	
+
 	public void Pop()
 	{
 		super.Last();
 		super.Remove();
 	}
-	
+
 	public Type Peek()
 	{
 		super.Last();
-		Type data = (Type) super.GetValue();
-		return data;
+		try
+		{
+			Type data = (Type) super.GetValue();
+			return data;
+		}
+		catch(NullPointerException e)
+		{
+			return null;
+		}
 	}
 }
