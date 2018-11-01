@@ -14,7 +14,7 @@ public class Library
 	public static String largestTitle;
 	public static String largestAuthor;
 	static Tools tools = new Tools();
-	static SearchSort mod = new SearchSort();
+	public static SearchSort mod = new SearchSort();
 
 	//Used to repeat characters
     public static String repeat(int count, String with) {
