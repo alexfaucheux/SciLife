@@ -1,4 +1,4 @@
- 
+
 
 import Tools.*;
 import Tools.StacksQueues.*;
@@ -14,7 +14,12 @@ public class Library
 	public static String largestTitle;
 	public static String largestAuthor;
 	static Tools tools = new Tools();
+<<<<<<< HEAD
 	public static SearchSort mod = new SearchSort();
+=======
+	static SearchSort mod = new SearchSort();
+	static Library library = new Library();
+>>>>>>> 113d585cecd4625f39e8aa7f8f48716caa9bff9e
 
 	//Used to repeat characters
     public static String repeat(int count, String with) {
@@ -25,7 +30,7 @@ public class Library
 	{
 		return printLibrary(true);
 	}
-	
+
 	public String[][] printLibrary(boolean print)
 	{
 		String[][] library = new String[books.GetSize()][4];
@@ -66,7 +71,7 @@ public class Library
             }
             if(print) System.out.println(" ");
         }
-        
+
         return library;
 	}
 
@@ -88,6 +93,17 @@ public class Library
 		return false;
 	}
 
+/*
+	In the event of an emergency, function will quick sort books by importance
+	and display in order of importance
+*/
+	public void Emergency()
+	{
+		books = mod.quickSort(books, "importance");
+		System.out.println("Save books in this order.");
+		library.printLibrary();
+	}
+
 	public static void main(String [] args) throws FileNotFoundException
 	{
 		Library library = new Library();
@@ -101,9 +117,10 @@ public class Library
 		}
 
 		file.close();
-		
+
 		books = mod.quickSort(books, "title");
 		library.printLibrary();
-		
+
+		library.Emergency();
 	}
 }
