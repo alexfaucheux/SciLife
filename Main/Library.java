@@ -13,13 +13,10 @@ public class Library
 	public static List<Book> books = new List<Book>();
 	public static String largestTitle;
 	public static String largestAuthor;
-	static Tools tools = new Tools();
-<<<<<<< HEAD
 	public static SearchSort mod = new SearchSort();
-=======
-	static SearchSort mod = new SearchSort();
+	static Tools tools = new Tools();
 	static Library library = new Library();
->>>>>>> 113d585cecd4625f39e8aa7f8f48716caa9bff9e
+
 
 	//Used to repeat characters
     public static String repeat(int count, String with) {
