@@ -14,7 +14,7 @@ public class Library
 	public static String largestTitle;
 	public static String largestAuthor;
 	static Tools tools = new Tools();
-	static SearchSort mod = new SearchSort();
+	public static SearchSort mod = new SearchSort();
 	static Library library = new Library();
 
 	//Used to repeat characters
@@ -22,11 +22,13 @@ public class Library
         return new String(new char[count]).replace("\0", with);
     }
 
+	//Prints current state of library to console
 	public String[][] printLibrary()
 	{
 		return printLibrary(true);
 	}
 
+	//Prints current state of library, boolean print changes whether method prints to console or not
 	public String[][] printLibrary(boolean print)
 	{
 		String[][] library = new String[books.GetSize()][4];
@@ -71,6 +73,8 @@ public class Library
         return library;
 	}
 
+	//Brute force searches linked list for title or author and sets curr to search
+	//	value location
 	public boolean Contains(String token, String key, List<Book> books)
 	{
 		String bookToken = "";
@@ -89,10 +93,9 @@ public class Library
 		return false;
 	}
 
-/*
-	In the event of an emergency, function will quick sort books by importance
-	and display in order of importance
-*/
+
+	//In the event of an emergency, function will quick sort books by importance
+	//	and display in order of importance
 	public void Emergency()
 	{
 		books = mod.quickSort(books, "importance");

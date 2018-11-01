@@ -2,6 +2,8 @@ import Tools.StacksQueues.*;
 
 class SearchSort
 {
+	//Performs a quick sort operation based on token parameter
+	//	Options for token are: title, author, or importance
 	public List<Book> quickSort(List<Book> books, String token)
     {
         if((books.GetSize() == 1) || (books.IsEmpty()))
@@ -55,12 +57,15 @@ class SearchSort
         return lessThan;
     }
 
+	//default method call for searchByTitle, sorts books by title and then calls binary
+	//	search method with appropriate parameters
 	public Book searchByTitle(String searchVal, List<Book> books)
 	{
 		books = quickSort(books, "title");
 		return searchByTitle(0, books.GetSize(), searchVal, books);
 	}
 
+	//Binary searches books for book title
 	public Book searchByTitle(int low, int high, String searchVal, List<Book> books)
 	{
 		if(high < low)
@@ -78,6 +83,7 @@ class SearchSort
 		return null;
 	}
 
+	//Binary searches for book written by author in books and returns location of author instance
 	public int searchByAuthor(int low, int high, String searchVal, List<Book> books)
 	{
 		if(high < low)
@@ -95,14 +101,17 @@ class SearchSort
 		return -1;
 	}
 
+	//Returns List of type Book containing all books written by input author
 	public List<Book> booksByAuthor(String author, List<Book> books)
 	{
 		books = quickSort(books, "author");
 		List<Book> booksByAuth = new List<Book>();
 		int authorIndex = searchByAuthor(0, books.GetSize(), author, books);
 
+		//Does not execute if author is not found
 		if(authorIndex != -1)
 		{
+			//Moves forward in list until first book by author is found
 			books.SetPos(authorIndex);
 			while(books.GetValue().getAuthor().equals(author))
 			{
@@ -111,6 +120,7 @@ class SearchSort
 					authorIndex = books.GetPos();
 			}
 
+			//Appends books to booksByAuth until book not written by input author is found
 			books.SetPos(authorIndex);
 			while(books.GetValue().getAuthor().equals(author))
 			{
