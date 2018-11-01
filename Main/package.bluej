@@ -1,7 +1,21 @@
 #BlueJ package file
-dependency1.from=Library
-dependency1.to=Book
+dependency1.from=Main
+dependency1.to=Library
 dependency1.type=UsesDependency
+<<<<<<< HEAD
+dependency2.from=Main
+dependency2.to=Book
+dependency2.type=UsesDependency
+dependency3.from=Library
+dependency3.to=Book
+dependency3.type=UsesDependency
+dependency4.from=Library
+dependency4.to=SearchSort
+dependency4.type=UsesDependency
+dependency5.from=SearchSort
+dependency5.to=Book
+dependency5.type=UsesDependency
+=======
 <<<<<<< HEAD
 dependency2.from=Library
 dependency2.to=SearchSort
@@ -29,23 +43,29 @@ package.frame.width=800
 package.numDependencies=4
 package.numTargets=5
 =======
+>>>>>>> 1db084b8619b1048e2f393aaad23aed17d12f82c
 editor.fx.0.height=747
 editor.fx.0.width=818
 editor.fx.0.x=551
 editor.fx.0.y=94
-objectbench.height=94
+objectbench.height=134
 objectbench.width=1896
 package.divider.horizontal=0.6
-package.divider.vertical=0.891280947255113
-package.editor.height=821
+package.divider.vertical=0.8482238966630786
+package.editor.height=781
 package.editor.width=1790
 package.editor.x=-9
 package.editor.y=-9
 package.frame.height=1048
 package.frame.width=1938
+<<<<<<< HEAD
+package.numDependencies=5
+package.numTargets=5
+=======
 package.numDependencies=1
 package.numTargets=4
 >>>>>>> 113d585cecd4625f39e8aa7f8f48716caa9bff9e
+>>>>>>> 1db084b8619b1048e2f393aaad23aed17d12f82c
 package.showExtends=true
 package.showUses=true
 project.charset=windows-1252
@@ -81,11 +101,22 @@ target4.type=ClassTarget
 <<<<<<< HEAD
 target4.width=80
 target4.x=10
+target4.y=180
+=======
+<<<<<<< HEAD
+target4.width=80
+target4.x=10
 target4.y=130
+>>>>>>> 1db084b8619b1048e2f393aaad23aed17d12f82c
 target5.height=50
 target5.name=SearchSort
 target5.showInterface=false
 target5.type=ClassTarget
+<<<<<<< HEAD
+target5.width=100
+target5.x=70
+target5.y=120
+=======
 target5.width=90
 target5.x=70
 target5.y=70
@@ -94,3 +125,4 @@ target4.width=100
 target4.x=70
 target4.y=120
 >>>>>>> 113d585cecd4625f39e8aa7f8f48716caa9bff9e
+>>>>>>> 1db084b8619b1048e2f393aaad23aed17d12f82c

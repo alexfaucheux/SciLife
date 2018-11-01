@@ -1,4 +1,14 @@
-
+/*
+	Data Structures Used:
+		Stack - Used to simulate returning books, books being returned by a user
+			are added to a stack, so the librarian must check books in from the top
+			of the stack first.
+		Linked List - Used a linked list for library because of its ease in adding and
+			removing titles from the library, and from its simplicity to sort by different
+			parameters.
+		2D Array - Used to make a table of book properties in order to facilitate printing the
+			library both to the console and to a GUI.
+*/
 
 import Tools.*;
 import Tools.StacksQueues.*;
@@ -13,9 +23,10 @@ public class Library
 	public static List<Book> books = new List<Book>();
 	public static String largestTitle;
 	public static String largestAuthor;
-	public static SearchSort mod = new SearchSort();
 	static Tools tools = new Tools();
+	public static SearchSort mod = new SearchSort();
 	static Library library = new Library();
+	private Stack<Book> returns = new Stack<Book>();
 
 
 	//Used to repeat characters
@@ -23,11 +34,13 @@ public class Library
         return new String(new char[count]).replace("\0", with);
     }
 
+	//Prints current state of library to console
 	public String[][] printLibrary()
 	{
 		return printLibrary(true);
 	}
 
+	//Prints current state of library, boolean print changes whether method prints to console or not
 	public String[][] printLibrary(boolean print)
 	{
 		String[][] library = new String[books.GetSize()][4];
@@ -72,6 +85,8 @@ public class Library
         return library;
 	}
 
+	//Brute force searches linked list for title or author and sets curr to search
+	//	value location. Token is title or author, key is value to search for
 	public boolean Contains(String token, String key, List<Book> books)
 	{
 		String bookToken = "";
@@ -90,15 +105,32 @@ public class Library
 		return false;
 	}
 
-/*
-	In the event of an emergency, function will quick sort books by importance
-	and display in order of importance
-*/
+
+	//In the event of an emergency, function will quick sort books by importance
+	//	and display in order of importance
 	public void Emergency()
 	{
 		books = mod.quickSort(books, "importance");
 		System.out.println("Save books in this order.");
 		library.printLibrary();
+	}
+
+	//Allows regular user to add book to be returned to the returns stack
+	public void returnBook(String title)
+	{
+		Book toReturn = mod.searchByTitle(title, books);
+		returns.Push(toReturn);
+	}
+
+	//Allows admin/librarian to check in all books in the returns stack
+	public void checkInBooks()
+	{
+		while(returns.Peek() != null)
+		{
+			Contains("title", returns.Peek().getTitle(), books);
+			books.GetValue().setSatus(1);
+			returns.Pop();
+		}
 	}
 
 	public static void main(String [] args) throws FileNotFoundException
@@ -118,6 +150,12 @@ public class Library
 		books = mod.quickSort(books, "title");
 		library.printLibrary();
 
-		library.Emergency();
+		library.returnBook("Alas Babylon");
+		library.returnBook("American Gods");
+		library.returnBook("Brave New World");
+		library.returnBook("Canticle For Leibowitz");
+
+		library.checkInBooks();
+		library.printLibrary();
 	}
 }
