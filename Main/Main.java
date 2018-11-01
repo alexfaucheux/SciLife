@@ -16,16 +16,29 @@ public class Main
 	static List<String> title = new List<String>();
 	static Library library = new Library();
 	
+	//prints entire library
 	public void printTable()
 	{
-		printTable(null);
+		printTable(null, null);
 	}
 	
+	//prints only one book
 	public void printTable(Book name)
 	{
+		printTable(name, null);
+	}
+	
+	//prints specified list of books
+	public void printTable(List<Book> books)
+	{
+		printTable(null, books);
+	}
+	
+	public void printTable(Book name, List<Book> books)
+	{
 		String[][] rowData = {{}};
-		if(name == null) rowData = library.printLibrary(false);
-		else 
+		if(name == null && books == null) rowData = library.printLibrary(false);
+		else if(books == null)
 		{
 			rowData = new String[1][4];
 			rowData[0][0] = name.getTitle(); 
@@ -33,7 +46,24 @@ public class Main
 			rowData[0][2] = Integer.toString(name.getStatus());
 			rowData[0][3] = Integer.toString(name.getImportance());
 		}
-						
+		
+		else
+		{
+			books.First();
+			for(int i=0; i<books.GetSize(); i++, books.Next())
+			{
+				name = books.GetValue();
+				rowData = new String[books.GetSize()][4];
+				rowData[i][0] = name.getTitle(); 
+				System.out.println(rowData[0][0]);
+				rowData[i][1] = name.getAuthor();
+				rowData[i][2] = Integer.toString(name.getStatus());
+				rowData[i][3] = Integer.toString(name.getImportance());
+				
+			}
+		}
+		
+		
 		Object[]colName = {"Title","Author","Status","Importance"};
 		JTable table = new JTable(rowData, colName);
 		javax.swing.table.TableColumn column = null;
@@ -100,29 +130,61 @@ public class Main
 					//Search
 					if (adminOpt  == 2)
 					{
-						  JTextField Title = new JTextField(5);
-						  JTextField Author = new JTextField(5);
+					  JTextField Title = new JTextField(5);
+					  JTextField Author = new JTextField(5);
 
-						  JPanel myPanel = new JPanel();
-						  myPanel.add(new JLabel("Title:"));
-						  myPanel.add(Title);
-						  myPanel.add(Box.createHorizontalStrut(15)); // adminOpt spacer
-						  myPanel.add(new JLabel("Author:"));
-						  myPanel.add(Author);
+					  JPanel myPanel = new JPanel();
+					  myPanel.add(new JLabel("Title:"));
+					  myPanel.add(Title);
+					  myPanel.add(Box.createHorizontalStrut(15)); // adminOpt spacer
+					  myPanel.add(new JLabel("Author:"));
+					  myPanel.add(Author);
 
-						  int result = JOptionPane.showConfirmDialog(null, myPanel, 
-								   "Please enter one below.", JOptionPane.OK_CANCEL_OPTION);
-						  
-						  if (result == JOptionPane.OK_OPTION) {
-							 if(!Title.getText().equals(""))
+					  int result = JOptionPane.showConfirmDialog(null, myPanel, 
+							   "Please enter one below.", JOptionPane.OK_CANCEL_OPTION);
+					  
+					  if (result == JOptionPane.OK_OPTION) 
+					  {
+						 if(!Title.getText().equals("") && !Author.getText().equals(""))
+						 {
+						 }
+						 
+						 else if(!Title.getText().equals(""))
+						 {
+							 Book book = library.mod.searchByTitle(Title.getText(), library.books);
+							 if(book != null && book.getStatus() != 0)
+								 main.printTable(book);
+							 else
 							 {
-								 Book book = library.mod.searchByTitle(Title.getText(), library.books);
-								 if(book != null && book.getStatus() != 0) main.printTable(book);
-								 else System.out.println("Not Found in library!");
+								 String diag = (book == null ? "Not found in library!" : "Book checked out!");
+								 JFrame parent = new JFrame();
+								 JOptionPane.showMessageDialog(parent, diag);
 							 }
-									
-						  }
+						 }
+						 
+						 else if(!Author.getText().equals(""))
+						 {
+							 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
+							 if(!books.IsEmpty())
+							 {
+								books.First();
+								for(int i=0; i<books.GetSize(); i++, books.Next())
+								{
+									if(books.GetValue().getStatus() == 0) books.Remove();
+								}
+								
+								if(!books.IsEmpty()) main.printTable(books);
+							 }
+							 if(books.IsEmpty())
+							 {
+								 String diag = (books == null ? "Not found in library!" : "Book checked out!");
+								 JFrame parent = new JFrame();
+								 JOptionPane.showMessageDialog(parent, diag);
+							 }
+						 }
+					  }
 					}	
+					
 					if (adminOpt  == 3)
 					{
 						String input = JOptionPane.showInputDialog("Enter book title");
