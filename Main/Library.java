@@ -107,12 +107,12 @@ public class Library
 
 
 	//In the event of an emergency, function will quick sort books by importance
-	//	and display in order of importance
-	public void Emergency()
+	//	and return list of books currently checked-in in order of importance
+	public List Emergency()
 	{
-		books = mod.quickSort(books, "importance");
-		System.out.println("Save books in this order.");
-		library.printLibrary();
+		List<Book> saveOrder = new List<Book>();
+		saveOrder = mod.quickSort(books, "importance");
+		return saveOrder;
 	}
 
 	//Allows regular user to add book to be returned to the returns stack
