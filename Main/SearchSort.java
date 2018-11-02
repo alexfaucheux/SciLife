@@ -21,7 +21,7 @@ class SearchSort
         books.First();
 		if(token.equals("importance"))
 		{
-			if(books.GetValue().getStatus() == 0)
+			if(pivot.getStatus() == 0)
 			{
 				books.Last();
 				while(books.GetValue().getStatus() == 0)
