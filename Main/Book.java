@@ -36,7 +36,7 @@ public class Book
 		return status;
 	}
 	
-	public void setSatus(int status)
+	public void setStatus(int status)
 	{
 		this.status = status;
 	}

@@ -1,4 +1,4 @@
-package Tools.StacksQueues;  
+package Tools.StacksQueues;
 
 
 /* ***************************************************
@@ -309,9 +309,9 @@ public class List<Type>
         while(tmp != null)
         {
             Type data = tmp.getData();
-			//if(data.equals(1)){s += " ";}
-            //else{s += data + " ";}
-			s+= data + " ";
+			if(data.equals(1)){s += " ";}
+            else{s += data + " ";}
+			//s+= data + " ";
             tmp = tmp.getNext();
         }
         

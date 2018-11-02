@@ -1,5 +1,4 @@
-package Tools.StacksQueues; 
-
+package Tools.StacksQueues;
 
 public class Queue<Type> extends List
 {
@@ -9,9 +8,11 @@ public class Queue<Type> extends List
 		super.InsertAfter(data);
 	}
 	
-	public void Dequeue()
+	public Type Dequeue()
 	{
 		super.First();
+		Type data = (Type) super.GetValue();
 		super.Remove();
+		return data;
 	}
 }

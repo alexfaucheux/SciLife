@@ -231,13 +231,31 @@ public class Main
 					  	main.search();
 					}
 					
+					//Check In
 					if (adminOpt  == 3)
 					{
 						String input = JOptionPane.showInputDialog("Enter book title");
 						JFrame frame = new JFrame();
-						int result = JOptionPane.showConfirmDialog(frame, "Are you sure?");
-						System.out.print(result);
+						if(library.Contains("title", input, library.books))
+						{
+							if(library.books.GetValue().getStatus() == 0)
+							{
+								library.returnBook(input);
+								library.checkInBooks();
+								JOptionPane.showMessageDialog(frame, "Book Successfully Returned");
+							}
+							
+							else JOptionPane.showMessageDialog(frame, "Book Already Checked In!");
+						}
+						
+						else JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+						
+						
+						//int result = JOptionPane.showConfirmDialog(frame, "Are you sure?");
+						//System.out.print(result);
 					}
+					
+					//Check Out
 					else if (adminOpt  == 4)
 					{	
 						String input = JOptionPane.showInputDialog("Enter book title");

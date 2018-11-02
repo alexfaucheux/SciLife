@@ -15,7 +15,10 @@ import Tools.StacksQueues.*;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.IOException;
+
 import java.util.Arrays;
 
 public class Library
@@ -125,18 +128,17 @@ public class Library
 	//Allows admin/librarian to check in all books in the returns stack
 	public void checkInBooks()
 	{
-		while(returns.Peek() != null)
+		while(!returns.IsEmpty())
 		{
-			Contains("title", returns.Peek().getTitle(), books);
-			books.GetValue().setSatus(1);
-			returns.Pop();
+			Contains("title", returns.Pop().getTitle(), books);
+			books.GetValue().setStatus(1);
 		}
 	}
 
 	//Outputs library to a text file and terminates program execution
 	public void endProgram(List<Book> books) throws IOException
 	{
-		books = new Tools().quickSort(books, "title");
+		books = mod.quickSort(books, "title");
 		//Prints output to file, from Blue Pelican Java
 		FileWriter fw = new FileWriter("libraryFile.txt");
 		PrintWriter output = new PrintWriter(fw);

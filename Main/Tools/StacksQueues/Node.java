@@ -1,4 +1,11 @@
-package Tools.StacksQueues; 
+package Tools.StacksQueues;
+
+/***************************************************
+ * <your name>
+ * <the date>
+ *
+ * Node Class - handles any form of data
+ *************************************************** */
 
 /*
 Was not sure if we could edit this file but since there was nothing in this file that
