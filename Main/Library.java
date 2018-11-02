@@ -118,6 +118,13 @@ public class Library
 		return saveOrder;
 	}
 
+	public void checkOut(String title)
+	{
+		if(Contains("title", title, books))
+			if(books.GetValue().getStatus() != 0)
+				books.GetValue().setStatus(0);		
+	}
+
 	//Allows regular user to add book to be returned to the returns stack
 	public void returnBook(String title)
 	{
