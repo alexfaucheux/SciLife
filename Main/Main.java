@@ -10,13 +10,15 @@ import javax.swing.*;
 import javafx.scene.control.TableColumn;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.UIManager;
 
-public class Main 
+public class Main
 {
 	static List<String> title = new List<String>();
 	static Library library = new Library();
 	
-	public void search()
+	public void search() throws IOException
 	{
 		JTextField Title = new JTextField(5);
 		JTextField Author = new JTextField(5);
@@ -110,24 +112,31 @@ public class Main
 	
 	
 	//prints entire library
-	public void printTable()
+	public void printTable() throws IOException
 	{
-		printTable(null, null);
+		printTable(null, null, 0);
 	}
 	
 	//prints only one book
-	public void printTable(Book name)
+	public void printTable(Book name) throws IOException
 	{
-		printTable(name, null);
+		printTable(name, null, 0);
 	}
 	
 	//prints specified list of books
-	public void printTable(List<Book> books)
+	public void printTable(List<Book> books) throws IOException
 	{
-		printTable(null, books);
+		printTable(null, books, 0);
 	}
 	
-	public void printTable(Book name, List<Book> books)
+	//prints table with color
+	public void printTable(List<Book> books, int num) throws IOException
+	{
+		printTable(null, books, num);
+	}
+	
+	
+	public void printTable(Book name, List<Book> books, int num) throws IOException
 	{
 		String[][] rowData = null;
 		
@@ -182,10 +191,20 @@ public class Main
 				column.setPreferredWidth(60);
 			}
 		}
-		JOptionPane.showMessageDialog(null, new JScrollPane(table));
+		
+		if(num == 1)
+		{
+			UIManager UI = new UIManager();
+			UIManager.put("OptionPane.background", new ColorUIResource(255, 0, 0));
+			UIManager.put("Panel.background", new ColorUIResource(255, 0, 0));
+			JOptionPane.showMessageDialog(null, new JScrollPane(table), "SetColor", JOptionPane.WARNING_MESSAGE);
+			library.endProgram();
+		}
+		
+		else JOptionPane.showMessageDialog(null, new JScrollPane(table));
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException
+	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Main main = new Main();
 		Scanner file = new Scanner(new File("books.txt"));
@@ -319,7 +338,7 @@ public class Main
 					}
 					else if (adminOpt  == 5)
 					{
-						System.out.println("FIRE");
+						main.printTable(library.Emergency(), 1);
 					}
 				}
 			}

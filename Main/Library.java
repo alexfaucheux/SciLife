@@ -113,9 +113,8 @@ public class Library
 	//	and return list of books currently checked-in in order of importance
 	public List Emergency()
 	{
-		List<Book> saveOrder = new List<Book>();
-		saveOrder = mod.quickSort(books, "importance");
-		return saveOrder;
+		books = mod.quickSort(books, "importance");
+		return books;
 	}
 
 	//Allows regular user to add book to be returned to the returns stack
@@ -137,7 +136,7 @@ public class Library
 	}
 
 	//Outputs library to a text file and terminates program execution
-	public void endProgram(List<Book> books) throws IOException
+	public void endProgram() throws IOException
 	{
 		books = mod.quickSort(books, "title");
 		//Prints output to file, from Blue Pelican Java
