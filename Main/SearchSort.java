@@ -21,6 +21,17 @@ class SearchSort
         books.First();
 		if(token.equals("importance"))
 		{
+			if(books.GetValue().getStatus() == 0)
+			{
+				books.Last();
+				while(books.GetValue().getStatus() == 0)
+				{
+					books.Prev();
+					if(books.GetValue().getStatus() == 1)
+						pivot = books.GetValue();
+				}
+				books.First();
+			}
 			for(int j = 0; j < books.GetSize()-1; j++, books.Next())
 	        {
 				if(books.GetValue().getStatus() != 0)
@@ -69,7 +80,7 @@ class SearchSort
 			if(books.GetValue().getTitle().Contains(searchVal))
 				bookList.InsertAfter(books.GetValue());
 
-//This was me being dumb, please ignore		
+//This was me being dumb, please ignore
 /*
 		books.First();
 		//If searching for one word (i.e. all titles containing "The")
