@@ -57,6 +57,42 @@ class SearchSort
         return lessThan;
     }
 
+	//Searches the list of books for any books containing a specified
+	//	substring
+	public List<Book> partialSearch(String searchVal, List<Book> books)
+	{
+		books = quickSort(books, "title");
+		List<Book> bookList = new List<Book>();
+
+		books.First();
+		for(int j = 0; j < books.GetSize(); j++, books.Next())
+			if(books.GetValue().getTitle().Contains(searchVal))
+				bookList.InsertAfter(books.GetValue());
+
+//This was me being dumb, please ignore		
+/*
+		books.First();
+		//If searching for one word (i.e. all titles containing "The")
+		if(searchVal.split(" ").length == 1)
+		{
+			for(int j = 0; j < books.GetSize(); j++, books.Next())
+				for(int k = 0; k < books.GetValue().getTitle().split(" ").length; k++)
+					if(books.GetValue().getTitle().split(" ")[k].equals(searchVal))
+						bookList.InsertAfter(books.GetValue());
+		}
+		//If searching for a string within a title
+		else
+		{
+			for(int j = 0; j < books.GetSize(); j++, books.Next())
+				for(int k = 0; (k + searchVal.length()) < books.GetValue().getTitle().length(); k++)
+					if(searchVal.equals(books.GetValue().getTitle().substring(k, (k + searchVal.length()))))
+						bookList.InsertAfter(books.GetValue());
+		}
+*/
+
+		return bookList;
+	}
+
 	//default method call for searchByTitle, sorts books by title and then calls binary
 	//	search method with appropriate parameters
 	public Book searchByTitle(String searchVal, List<Book> books)
