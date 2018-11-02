@@ -118,13 +118,6 @@ public class Library
 		return saveOrder;
 	}
 
-	public void checkOut(String title)
-	{
-		if(Contains("title", title, books))
-			if(books.GetValue().getStatus() != 0)
-				books.GetValue().setStatus(0);		
-	}
-
 	//Allows regular user to add book to be returned to the returns stack
 	public void returnBook(String title)
 	{
@@ -133,12 +126,13 @@ public class Library
 	}
 
 	//Allows admin/librarian to check in all books in the returns stack
-	public void checkInBooks()
+	public void check(String whatnow)
 	{
+		int ohOkay = (whatnow.equals("in") ? 1 : whatnow.equals("out") ? 0 : -1);
 		while(!returns.IsEmpty())
 		{
 			Contains("title", returns.Pop().getTitle(), books);
-			books.GetValue().setStatus(1);
+			books.GetValue().setStatus(ohOkay);
 		}
 	}
 
@@ -173,16 +167,11 @@ public class Library
 		}
 
 		file.close();
-
-		books = mod.quickSort(books, "title");
-		library.printLibrary();
-
-		library.returnBook("Alas Babylon");
-		library.returnBook("American Gods");
-		library.returnBook("Brave New World");
-		library.returnBook("Canticle For Leibowitz");
-
-		library.checkInBooks();
-		library.printLibrary();
 	}
+	
+	public int getStackSize()
+	{
+		return returns.GetSize();
+	}
+	
 }

@@ -203,7 +203,7 @@ public class Main
 		int user = 0;
 		while (user == 0 || user == 1)
 		{
-			Object[] options = {"Administrater", "Student", "Exit Library"};
+			Object[] options = {"Administrator", "Student", "Exit Library"};
 			user = JOptionPane.showOptionDialog( null, "Please select", "SciFiLi", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);	
 			
 			//Administrator
@@ -214,7 +214,7 @@ public class Main
 				{
 					
 					Object[] options2 = {"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", "Back"};
-					adminOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrater", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
+					adminOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrator", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 					
 					//Sort
 					if (adminOpt  == 0 || adminOpt == 1)
@@ -228,40 +228,91 @@ public class Main
 					//Search
 					if (adminOpt  == 2)
 					{
-					  	main.search();
+						main.search();
 					}
 					
 					//Check In
 					if (adminOpt  == 3)
 					{
-						String input = JOptionPane.showInputDialog("Enter book title");
-						JFrame frame = new JFrame();
-						if(library.Contains("title", input, library.books))
+						int result = 1;
+						while(result == 1)
 						{
-							if(library.books.GetValue().getStatus() == 0)
+							Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
+							
+							JFrame frame = new JFrame();
+							JPanel panel = new JPanel();
+							panel.add(new JLabel("Book Title:"));
+							JTextField textField = new JTextField(10);
+							panel.add(textField);
+
+							result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
+									 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+									 null, options1, null);
+							
+							String input = textField.getText();
+							
+							
+							
+							if(library.Contains("title", input, library.books) && result != 2)
 							{
-								library.returnBook(input);
-								library.checkInBooks();
-								JOptionPane.showMessageDialog(frame, "Book Successfully Returned");
+								if(library.books.GetValue().getStatus() == 0) 
+									library.returnBook(input);		
+								
+								else JOptionPane.showMessageDialog(frame, "Book Already Checked In!");
 							}
 							
-							else JOptionPane.showMessageDialog(frame, "Book Already Checked In!");
+							else if(result != 2)
+								JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+							
+							int size = library.getStackSize();
+							if(result == 0 && size != 0)
+							{
+								library.check("in");
+								JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Came Back To Jail."));
+							}
 						}
-						
-						else JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
-						
-						
-						//int result = JOptionPane.showConfirmDialog(frame, "Are you sure?");
-						//System.out.print(result);
 					}
 					
 					//Check Out
 					else if (adminOpt  == 4)
 					{	
-						String input = JOptionPane.showInputDialog("Enter book title");
-						JFrame frame = new JFrame();
-						int result = JOptionPane.showConfirmDialog(frame, "Are you sure?");
-						System.out.print(result);
+						int result = 1;
+						while(result == 1)
+						{
+							Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
+							
+							JFrame frame = new JFrame();
+							JPanel panel = new JPanel();
+							panel.add(new JLabel("Book Title:"));
+							JTextField textField = new JTextField(10);
+							panel.add(textField);
+
+							result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
+									 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+									 null, options1, null);
+							
+							String input = textField.getText();
+							
+							
+							
+							if(library.Contains("title", input, library.books) && result != 2)
+							{
+								if(library.books.GetValue().getStatus() == 1) 
+									library.returnBook(input);		
+								
+								else JOptionPane.showMessageDialog(frame, "Book Already Checked Out!");
+							}
+							
+							else if(result != 2)
+								JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+							
+							int size = library.getStackSize();
+							if(result == 0 && size != 0)
+							{
+								library.check("out");
+								JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Left The Building"));
+							}
+						}
 
 
 					
