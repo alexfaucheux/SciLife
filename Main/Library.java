@@ -140,7 +140,7 @@ public class Library
 	{
 		books = mod.quickSort(books, "title");
 		//Prints output to file, from Blue Pelican Java
-		FileWriter fw = new FileWriter("libraryFile.txt");
+		FileWriter fw = new FileWriter("booksCopy.txt");
 		PrintWriter output = new PrintWriter(fw);
 		books.First();
 		for(int j = 0; j < books.GetSize(); j++, books.Next())

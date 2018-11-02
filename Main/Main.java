@@ -207,7 +207,7 @@ public class Main
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Main main = new Main();
-		Scanner file = new Scanner(new File("books.txt"));
+		Scanner file = new Scanner(new File("booksCopy.txt"));
 		
 		
 		while(file.hasNextLine())
@@ -367,7 +367,7 @@ public class Main
 				}
 			}		
 		}
-		System.exit(0);
+		library.endProgram();
 	}
 }
 	

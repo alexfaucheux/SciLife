@@ -77,7 +77,7 @@ class SearchSort
 
 		books.First();
 		for(int j = 0; j < books.GetSize(); j++, books.Next())
-			if(books.GetValue().getTitle().Contains(searchVal))
+			if(books.GetValue().getTitle().contains(searchVal))
 				bookList.InsertAfter(books.GetValue());
 
 //This was me being dumb, please ignore
