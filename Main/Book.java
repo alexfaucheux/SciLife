@@ -2,13 +2,17 @@
 
 public class Book
 {
+	String owner;
 	String author;
 	String title;
+	String staff;
 	int status;
 	int imp;
 	
-	public Book(String title, String author, int status, int imp)
+	public Book(String title, String author, int status, int imp, String owner, String staff)
 	{
+		this.staff = staff;
+		this.owner = owner;
 		this.author = author;
 		this.title = title;
 		this.status = status;
@@ -44,5 +48,15 @@ public class Book
 	public int getImportance()
 	{
 		return imp;
+	}
+	
+	public String getOwner()
+	{
+		return owner;
+	}
+	
+	public String getStaff()
+	{
+		return staff;
 	}
 }
