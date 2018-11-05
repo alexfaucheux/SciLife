@@ -19,6 +19,13 @@ public class TestDialog {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
+		username_password();
+	}
+
+	/**
+	 * @throws FileNotFoundException
+	 */
+	private static void username_password() throws FileNotFoundException {
 		int loop = 0;
 		File file = new File(
 				"C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\Username&Password");
