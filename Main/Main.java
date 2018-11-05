@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javafx.scene.control.TableColumn;
 import java.awt.Dimension;
-import java.io.FileNotFoundExc:eption;
+import java.io.FileNotFoundException;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.UIManager;
 
@@ -147,20 +147,18 @@ public class Main
 		//rowData contains only one book
 		else if(books == null)
 		{
-			rowData = new String[1][6];
+			rowData = new String[1][4];
 			rowData[0][0] = name.getTitle(); 
 			rowData[0][1] = name.getAuthor();
 			rowData[0][2] = "In";
 			rowData[0][3] = Integer.toString(name.getImportance());
-			rowData[0][4] = name.getOwner();
-			rowData[0][5] = name.getStaff();
 		}
 		
 		//rowData contains list of books of certain author
 		else
 		{
 			books.First();
-			rowData = new String[books.GetSize()][6];
+			rowData = new String[books.GetSize()][4];
 			for(int i=0; i<books.GetSize(); i++, books.Next())
 			{
 				name = books.GetValue();
@@ -168,14 +166,12 @@ public class Main
 				rowData[i][1] = name.getAuthor();
 				rowData[i][2] = "In";
 				rowData[i][3] = Integer.toString(name.getImportance());
-				rowData[i][4] = name.getOwner();
-				rowData[i][5] = name.getStaff();
 				
 			}
 		}
 		
 		
-		Object[]colName = {"Title","Author","Status","Importance","Owner","Staff"};
+		Object[]colName = {"Title","Author","Status","Importance"};
 		JTable table = new JTable(rowData, colName);
 		javax.swing.table.TableColumn column = null;
 		
@@ -212,20 +208,13 @@ public class Main
 	{
 		Main main = new Main();
 		Scanner file = new Scanner(new File("booksCopy.txt"));
-		Scanner names = new Scanner(new File("Names.txt"));
 		
 		
 		while(file.hasNextLine())
 		{
-			String name = " ";
 			String line = file.nextLine();
 			String[] split = line.split(", ");
-			if(split[3].equals("0"))
-			{
-				name = file2.nextLine();
-			}
-			
-			library.books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), name, "Lori"));
+			library.books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3])));
 		}
 
 		file.close();
