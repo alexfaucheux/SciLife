@@ -52,9 +52,9 @@ class SearchSort
 	            if(token.equals("title")) {pivotToken = pivot.getTitle(); booksToken = books.GetValue().getTitle();}
 	            else if(token.equals("author")) {pivotToken = pivot.getAuthor(); booksToken = books.GetValue().getAuthor();}
 
-	            if(pivotToken.compareTo(booksToken) > 1)
+	            if(pivotToken.compareTo(booksToken) > 0)
 	                lessThan.InsertAfter(books.GetValue());
-	            else if(pivotToken.compareTo(booksToken) < 1)
+	            else if(pivotToken.compareTo(booksToken) < 0)
 	                greaterThan.InsertAfter(books.GetValue());
 	            else
 	                lessThan.InsertAfter(books.GetValue());
