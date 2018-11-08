@@ -32,7 +32,7 @@ public class TestDialog {
 				"C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\MasterUser");
 
 		Scanner sc1 = new Scanner(file2);
-		
+
 		masterUser = sc1.nextLine().split(" ");
 		Scanner sc = new Scanner(file);
 		while (sc.hasNext()) {
@@ -139,12 +139,12 @@ public class TestDialog {
 		outputStream.println(print_file);
 		outputStream.close();
 	}
-	
+
 	private static void updateMaster() throws FileNotFoundException {
 		String print_file = "";
 		print_file += (masterUser[0] + " ");
 		print_file += (masterUser[1]);
-		
+
 		String fileName = "C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\MasterUser";
 		PrintWriter outputStream = new PrintWriter(fileName);
 		outputStream.println(print_file);
@@ -152,7 +152,7 @@ public class TestDialog {
 	}
 
 	/**
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 * 
 	 */
 	private static void removeUser() throws FileNotFoundException {
@@ -169,7 +169,8 @@ public class TestDialog {
 
 				// checks if the user name and password is correct
 
-				if (remove_username.getText().equals(masterUser[0]) && remove_password.getText().equals(masterUser[1])) {
+				if (remove_username.getText().equals(masterUser[0])
+						&& remove_password.getText().equals(masterUser[1])) {
 					while (remove_user == 0) {
 						String enteredUsername = JOptionPane
 								.showInputDialog("What is the username that you would like to remove?");
@@ -178,19 +179,28 @@ public class TestDialog {
 							remove_user = 1;
 						else if (!enteredUsername.equals("")) {
 							if (!enteredUsername.equals(masterUser[0])) {
+								boolean remove = false;
 								for (int j = 0; j < usernameList.length; j++) {
-									if (usernameList[j].equals(enteredUsername)) {
-										usernameList[j] = null;
-										passwordList[j] = null;
-										int answer = JOptionPane.showConfirmDialog(null,
-												"Would you like to remove another user?", "Master",
-												JOptionPane.YES_NO_OPTION);
+									if (usernameList[j] != null) {
+										if (usernameList[j].equals(enteredUsername)) {
+											usernameList[j] = null;
+											passwordList[j] = null;
+											remove = true;
+											int answer = JOptionPane.showConfirmDialog(null,
+													"Would you like to remove another user?", "Master",
+													JOptionPane.YES_NO_OPTION);
 
-										if (answer != 0) {
-											remove_user = 1;
+											if (answer != 0) {
+												remove_user = 1;
+											}
+											break;
 										}
-										break;
 									}
+									else break;
+								}
+								if (!remove) {
+									JOptionPane.showMessageDialog(null,
+											"The username does not exist. \nPlease try again");
 								}
 							} else if (enteredUsername.equals(masterUser[0])) {
 								int areUsure = JOptionPane.showConfirmDialog(null,
@@ -227,13 +237,11 @@ public class TestDialog {
 												JOptionPane.showMessageDialog(null,
 														"Nothing was entered please try again");
 											}
-										}
-										else {
+										} else {
 											stop = true;
 										}
 
-									}
-									else {
+									} else {
 										stop = true;
 									}
 								}
