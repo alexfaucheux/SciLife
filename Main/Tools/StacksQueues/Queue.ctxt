@@ -3,5 +3,5 @@ comment0.target=Queue
 comment1.params=data
 comment1.target=void\ Enqueue(java.lang.Object)
 comment2.params=
-comment2.target=void\ Dequeue()
+comment2.target=java.lang.Object\ Dequeue()
 numComments=3
