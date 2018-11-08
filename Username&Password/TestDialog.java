@@ -12,17 +12,28 @@ import javax.swing.JTextField;
 public class TestDialog {
 
 	static int remove_user = 0;
-	static String masterUser = "Lori";
-	static String masterPassword = "Jacques";
+	static String[] masterUser = new String[2];
 	static String[] usernameList = new String[10];
 	static String[] passwordList = new String[10];
 
 	public static void main(String[] args) throws FileNotFoundException {
 
+		username_password();
+	}
+
+	/**
+	 * @throws FileNotFoundException
+	 */
+	private static void username_password() throws FileNotFoundException {
 		int loop = 0;
 		File file = new File(
 				"C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\Username&Password");
+		File file2 = new File(
+				"C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\MasterUser");
 
+		Scanner sc1 = new Scanner(file2);
+		
+		masterUser = sc1.nextLine().split(" ");
 		Scanner sc = new Scanner(file);
 		while (sc.hasNext()) {
 			String[] makeList = sc.nextLine().split(" ");
@@ -33,7 +44,7 @@ public class TestDialog {
 			}
 			loop += 1;
 		}
-
+		sc1.close();
 		sc.close();
 		boolean master = false;
 		boolean correct = false;
@@ -51,7 +62,7 @@ public class TestDialog {
 
 					// checks if the user name and password is correct
 					for (int i = 0; i < usernameList.length; i++) {
-						if (username.getText().equals(masterUser) && password.getText().equals(masterPassword)) {
+						if (username.getText().equals(masterUser[0]) && password.getText().equals(masterUser[1])) {
 							master = true;
 							correct = true;
 							break;
@@ -128,16 +139,28 @@ public class TestDialog {
 		outputStream.println(print_file);
 		outputStream.close();
 	}
+	
+	private static void updateMaster() throws FileNotFoundException {
+		String print_file = "";
+		print_file += (masterUser[0] + " ");
+		print_file += (masterUser[1]);
+		
+		String fileName = "C:\\Users\\Joshw\\Desktop\\Computer Science\\Data structure\\test\\src\\test\\MasterUser";
+		PrintWriter outputStream = new PrintWriter(fileName);
+		outputStream.println(print_file);
+		outputStream.close();
+	}
 
 	/**
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	private static void removeUser() {
+	private static void removeUser() throws FileNotFoundException {
 		int remove_loginOpt = 0;
 		JTextField remove_username = new JTextField();
 		JTextField remove_password = new JPasswordField();
 		Object[] remove_loginMessage = { "Username:", remove_username, "Password:", remove_password };
-		remove_loginOpt = JOptionPane.showConfirmDialog(null, remove_loginMessage, "Login",
+		remove_loginOpt = JOptionPane.showConfirmDialog(null, remove_loginMessage, " Master Login",
 				JOptionPane.OK_CANCEL_OPTION);
 		if (remove_loginOpt == JOptionPane.OK_OPTION) {
 
@@ -146,7 +169,7 @@ public class TestDialog {
 
 				// checks if the user name and password is correct
 
-				if (remove_username.getText().equals(masterUser) && remove_password.getText().equals(masterPassword)) {
+				if (remove_username.getText().equals(masterUser[0]) && remove_password.getText().equals(masterUser[1])) {
 					while (remove_user == 0) {
 						String enteredUsername = JOptionPane
 								.showInputDialog("What is the username that you would like to remove?");
@@ -154,18 +177,65 @@ public class TestDialog {
 						if (enteredUsername == null)
 							remove_user = 1;
 						else if (!enteredUsername.equals("")) {
-							for (int j = 0; j < usernameList.length; j++) {
-								if (usernameList[j].equals(enteredUsername)) {
-									usernameList[j] = null;
-									passwordList[j] = null;
-									int answer = JOptionPane.showConfirmDialog(null,
-											"Would you like to remove another user?", "Master",
-											JOptionPane.YES_NO_OPTION);
+							if (!enteredUsername.equals(masterUser[0])) {
+								for (int j = 0; j < usernameList.length; j++) {
+									if (usernameList[j].equals(enteredUsername)) {
+										usernameList[j] = null;
+										passwordList[j] = null;
+										int answer = JOptionPane.showConfirmDialog(null,
+												"Would you like to remove another user?", "Master",
+												JOptionPane.YES_NO_OPTION);
 
-									if (answer != 0) {
-										remove_user = 1;
+										if (answer != 0) {
+											remove_user = 1;
+										}
+										break;
 									}
-									break;
+								}
+							} else if (enteredUsername.equals(masterUser[0])) {
+								int areUsure = JOptionPane.showConfirmDialog(null,
+										"Are you sure you want to change the master user?", "Master",
+										JOptionPane.YES_NO_OPTION);
+								boolean stop = false;
+								while (!stop) {
+									if (areUsure == 0) {
+										JTextField addUserName = new JTextField();
+										JTextField addUserPassword = new JPasswordField();
+										JTextField confirmPassword = new JPasswordField();
+										Object[] addUserMessage = { "New Username:", addUserName, " New Password:",
+												addUserPassword, "Confirm Password", confirmPassword };
+										int changeMaster = JOptionPane.showConfirmDialog(null, addUserMessage, "Master",
+												JOptionPane.OK_CANCEL_OPTION);
+
+										if (changeMaster == 0) {
+											if (!addUserName.getText().equals("")
+													&& !addUserPassword.getText().equals("")
+													&& !confirmPassword.getText().equals("")) {
+												// makes sure the password and the confirm password is the same
+												if (addUserPassword.getText().equals(confirmPassword.getText())) {
+													masterUser[0] = addUserName.getText();
+													masterUser[1] = addUserPassword.getText();
+													updateMaster();
+													stop = true;
+													JOptionPane.showMessageDialog(null, "New user successfully added.",
+															null, JOptionPane.WARNING_MESSAGE);
+												} else {
+													JOptionPane.showMessageDialog(null,
+															"Passwords did not match please try again.");
+												}
+											} else {
+												JOptionPane.showMessageDialog(null,
+														"Nothing was entered please try again");
+											}
+										}
+										else {
+											stop = true;
+										}
+
+									}
+									else {
+										stop = true;
+									}
 								}
 							}
 						} else if (enteredUsername.equals(""))

@@ -1,7 +1,7 @@
 /*
 	Data Structures Used:
-		Stack - Used to simulate returning books, books being returned by a user
-			are added to a stack, so the librarian must check books in from the top
+		Stack - Used to emulate returning/checking out books, books being returned/checked out
+			by a user are added to a stack, so the librarian must check books in/out from the top
 			of the stack first.
 		Linked List - Used a linked list for library because of its ease in adding and
 			removing titles from the library, and from its simplicity to sort by different
@@ -113,7 +113,7 @@ public class Library
 
 	//In the event of an emergency, function will quick sort books by importance
 	//	and return list of books currently checked-in in order of importance
-	public List Emergency()
+	public List<Book> Emergency()
 	{
 		books = mod.quickSort(books, "importance");
 		return books;
@@ -168,11 +168,17 @@ public class Library
 		} */
 
 		file.close();
+/*
+		List<Book> partial= mod.partialSearch("he", books);
+		partial.First();
+		for(int j = 0; j < partial.GetSize(); j++, partial.Next())
+			System.out.println(partial.GetValue().getTitle());
+*/
 	}
-	
+
 	public int getStackSize()
 	{
 		return returns.GetSize();
 	}
-	
+
 }
