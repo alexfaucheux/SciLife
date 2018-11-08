@@ -1,5 +1,6 @@
 import Tools.*;
 import Tools.StacksQueues.*;
+import UserManagement.*;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -205,6 +206,7 @@ public class Main
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Main main = new Main();
+		UserPassword credentials = new UserPassword();
 		Scanner file = new Scanner(new File("booksCopy.txt"));
 		Scanner names = new Scanner(new File("Names.txt"));
 		
@@ -235,121 +237,134 @@ public class Main
 			//Administrator
 			if (user == 0)
 			{
-				int adminOpt = 0;
-				while (adminOpt  == 0 || adminOpt == 1 || adminOpt == 2 || adminOpt == 3 || adminOpt == 4 || adminOpt == 5)
+				String masteropt = null;
+				String type = credentials.username_password();
+				if(!type.equals("cancel"))
 				{
-					
-					Object[] options2 = {"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", "Back"};
-					adminOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrator", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
-					
-					//Sort
-					if (adminOpt  == 0 || adminOpt == 1)
+					if(type.equals("master")) masteropt = "Manage Users";
+					int adminOpt = 0;
+					while (adminOpt  == 0 || adminOpt == 1 || adminOpt == 2 || adminOpt == 3 || adminOpt == 4 || adminOpt == 5 || (adminOpt == 6 && type.equals("master")))
 					{
-						String sortby = (adminOpt == 0 ? "title" : "author");
-						library.books = library.mod.quickSort(library.books, sortby);
-						String[][]rowData = library.printLibrary(false);
-						main.printTable();
-					}
-
-					//Search
-					if (adminOpt  == 2)
-					{
-						main.search();
-					}
-					
-					//Check In
-					if (adminOpt  == 3)
-					{
-						int result = 1;
-						while(result == 1)
+						Object[] options2 = (type.equals("master") ? new Object[]{"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", masteropt, "Back"} : 
+											new Object[]{"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", "Back"}); 
+						//options2 = {"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", "Back"};}
+						
+						adminOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrator", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
+						
+						//Sort
+						if (adminOpt  == 0 || adminOpt == 1)
 						{
-							Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
-							
-							JFrame frame = new JFrame();
-							JPanel panel = new JPanel();
-							panel.add(new JLabel("Book Title:"));
-							JTextField textField = new JTextField(10);
-							panel.add(textField);
-
-							result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
-									 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-									 null, options1, null);
-							
-							String input = textField.getText();
-							
-							
-							
-							if(library.Contains("title", input, library.books) && result != 2)
-							{
-								if(library.books.GetValue().getStatus() == 0) 
-									library.returnBook(input);		
-								
-								else JOptionPane.showMessageDialog(frame, "Book Already Checked In!");
-							}
-							
-							else if(result != 2)
-								JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
-							
-							int size = library.getStackSize();
-							if(result == 0 && size != 0)
-							{
-								library.check("in");
-								JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Came Back To Jail."));
-							}
-						}
-					}
-					
-					//Check Out
-					else if (adminOpt  == 4)
-					{	
-						int result = 1;
-						while(result == 1)
-						{
-							Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
-							
-							JFrame frame = new JFrame();
-							JPanel panel = new JPanel();
-							panel.add(new JLabel("Book Title:"));
-							JTextField textField = new JTextField(10);
-							panel.add(textField);
-
-							result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
-									 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-									 null, options1, null);
-							
-							String input = textField.getText();
-							
-							
-							
-							if(library.Contains("title", input, library.books) && result != 2)
-							{
-								if(library.books.GetValue().getStatus() == 1) 
-									library.returnBook(input);		
-								
-								else JOptionPane.showMessageDialog(frame, "Book Already Checked Out!");
-							}
-							
-							else if(result != 2)
-								JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
-							
-							int size = library.getStackSize();
-							if(result == 0 && size != 0)
-							{
-								library.check("out");
-								JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Left The Building"));
-							}
+							String sortby = (adminOpt == 0 ? "title" : "author");
+							library.books = library.mod.quickSort(library.books, sortby);
+							String[][]rowData = library.printLibrary(false);
+							main.printTable();
 						}
 
+						//Search
+						if (adminOpt  == 2)
+						{
+							main.search();
+						}
+						
+						//Check In
+						if (adminOpt  == 3)
+						{
+							int result = 1;
+							while(result == 1)
+							{
+								Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
+								
+								JFrame frame = new JFrame();
+								JPanel panel = new JPanel();
+								panel.add(new JLabel("Book Title:"));
+								JTextField textField = new JTextField(10);
+								panel.add(textField);
 
-					
-					}
-					else if (adminOpt  == 5)
-					{
-						main.printTable(library.Emergency(), 1);
+								result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
+										 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+										 null, options1, null);
+								
+								String input = textField.getText();
+								
+								
+								
+								if(library.Contains("title", input, library.books) && result != 2)
+								{
+									if(library.books.GetValue().getStatus() == 0) 
+										library.returnBook(input);		
+									
+									else JOptionPane.showMessageDialog(frame, "Book Already Checked In!");
+								}
+								
+								else if(result != 2)
+									JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+								
+								int size = library.getStackSize();
+								if(result == 0 && size != 0)
+								{
+									library.check("in");
+									JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Came Back To Jail."));
+								}
+							}
+						}
+						
+						//Check Out
+						else if (adminOpt  == 4)
+						{	
+							int result = 1;
+							while(result == 1)
+							{
+								Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
+								
+								JFrame frame = new JFrame();
+								JPanel panel = new JPanel();
+								panel.add(new JLabel("Book Title:"));
+								JTextField textField = new JTextField(10);
+								panel.add(textField);
+
+								result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
+										 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+										 null, options1, null);
+								
+								String input = textField.getText();
+								
+								
+								
+								if(library.Contains("title", input, library.books) && result != 2)
+								{
+									if(library.books.GetValue().getStatus() == 1) 
+										library.returnBook(input);		
+									
+									else JOptionPane.showMessageDialog(frame, "Book Already Checked Out!");
+								}
+								
+								else if(result != 2)
+									JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+								
+								int size = library.getStackSize();
+								if(result == 0 && size != 0)
+								{
+									library.check("out");
+									JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Left The Building"));
+								}
+							}
+
+
+						
+						}
+						else if (adminOpt  == 5)
+						{
+							main.printTable(library.Emergency(), 1);
+						}
+						
+						else if(adminOpt == 6 && type.equals("master"))
+						{
+							credentials.displayOptions();
+						}
 					}
 				}
-			}
 			
+		}
 			//Student
 			else if (user== 1) 
 			{
@@ -376,6 +391,7 @@ public class Main
 		}
 		library.endProgram();
 	}
+
 }
 	
 

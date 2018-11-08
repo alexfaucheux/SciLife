@@ -1,0 +1,27 @@
+#BlueJ package file
+objectbench.height=118
+objectbench.width=1128
+package.divider.horizontal=0.6
+package.divider.vertical=0.7459349593495935
+package.editor.height=360
+package.editor.width=1038
+package.editor.x=322
+package.editor.y=177
+package.frame.height=592
+package.frame.width=1168
+package.numDependencies=0
+package.numTargets=1
+package.showExtends=true
+package.showUses=true
+readme.height=58
+readme.name=@README
+readme.width=47
+readme.x=10
+readme.y=10
+target1.height=50
+target1.name=UserPassword
+target1.showInterface=false
+target1.type=ClassTarget
+target1.width=110
+target1.x=10
+target1.y=90
