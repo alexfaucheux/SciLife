@@ -4,14 +4,11 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.ArrayList;
-import javax.swing.*;
-import javafx.scene.control.TableColumn;
 import java.awt.Dimension;
-import java.io.FileNotFoundException;
+import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
-import javax.swing.UIManager;
+import javafx.scene.control.TableColumn;
+
 
 public class Main
 {
@@ -35,77 +32,75 @@ public class Main
 
 		if (result == JOptionPane.OK_OPTION) 
 		{
-		 if(!Title.getText().equals("") && !Author.getText().equals(""))
-		 {
-			 boolean AuthorExist = false;
-			 boolean BookExist = false;
-			 boolean checkedIn = true;
-			 
-			 Book book = library.mod.searchByTitle(Title.getText(), library.books);
-			 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
-			 
-			 if(!books.IsEmpty())
-			 {
-				AuthorExist = true;
-				books.First();
-				for(int i=0; i<books.GetSize(); i++, books.Next())
-				{
-					if(book != null) if(books.GetValue().getTitle().equals(book.getTitle()) &&
-					   books.GetValue().getStatus() == 1) {BookExist = true; break;}
-					   
-					if(book != null) if(books.GetValue().getTitle().equals(book.getTitle()) &&
-					   books.GetValue().getStatus() == 0) {checkedIn = false; break;}
-				}
-				
-				if(BookExist) printTable(book);
-			 }
-			 
-			 if(!AuthorExist || !BookExist)
-			 {
-				 String diag = (!AuthorExist ? "Author does not exist in library!" :
-								!BookExist && checkedIn ? "Book does not exist in library!" : 
-								"Book checked out!");
-								
-				 JFrame parent = new JFrame();
-				 JOptionPane.showMessageDialog(parent, diag);
-			 }
+			if(!Title.getText().equals("") && !Author.getText().equals(""))
+			{
+				 boolean AuthorExist = false;
+				 boolean BookExist = false;
+				 boolean checkedIn = true;
 				 
-		 }
+				 Book book = library.mod.searchByTitle(Title.getText(), library.books);
+				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
+				 
+				 if(!books.IsEmpty())
+				 {
+					AuthorExist = true;
+					books.First();
+					for(int i=0; i<books.GetSize(); i++, books.Next())
+					{
+						if(book != null) if(books.GetValue().getTitle().equals(book.getTitle()) &&
+						   books.GetValue().getStatus() == 1) {BookExist = true; break;}
+						   
+						if(book != null) if(books.GetValue().getTitle().equals(book.getTitle()) &&
+						   books.GetValue().getStatus() == 0) {checkedIn = false; break;}
+					}
+					
+					if(BookExist) printTable(book);
+				 }
+	 
+				 if(!AuthorExist || !BookExist)
+				 {
+					 String diag = (!AuthorExist ? "Author does not exist in library!" :
+									!BookExist && checkedIn ? "Book does not exist in library!" : 
+									"Book checked out!");
+									
+					 JFrame parent = new JFrame();
+					 JOptionPane.showMessageDialog(parent, diag);
+				 }
+			}
 		 
-		 else if(!Title.getText().equals(""))
-		 {
-			 Book book = library.mod.searchByTitle(Title.getText(), library.books);
-			 if(book != null && book.getStatus() != 0)
-				 printTable(book);
-			 else
-			 {
-				 String diag = (book == null ? "Not found in library!" : "Book checked out!");
-				 JFrame parent = new JFrame();
-				 JOptionPane.showMessageDialog(parent, diag);
-			 }
-		 }
+			else if(!Title.getText().equals(""))
+			{
+				 Book book = library.mod.searchByTitle(Title.getText(), library.books);
+				 if(book != null && book.getStatus() != 0)
+					 printTable(book);
+				 else
+				 {
+					 String diag = (book == null ? "Not found in library!" : "Book checked out!");
+					 JFrame parent = new JFrame();
+					 JOptionPane.showMessageDialog(parent, diag);
+				 }
+			}
 		 
-		 else if(!Author.getText().equals(""))
-		 {
-			 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
-			 if(!books.IsEmpty())
-			 {
-				books.First();
-				for(int i=0; i<books.GetSize(); i++, books.Next())
+			else if(!Author.getText().equals(""))
+			{
+				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
+				 if(!books.IsEmpty())
+				 {
+					books.First();
+					for(int i=0; i<books.GetSize(); i++, books.Next())
+					{
+						if(books.GetValue().getStatus() == 0) books.Remove();
+					}
+					
+					if(!books.IsEmpty()) printTable(books);
+				 }
+				if(books.IsEmpty())
 				{
-					if(books.GetValue().getStatus() == 0) books.Remove();
+					 String diag = "Author has no books in Library!";
+					 JFrame parent = new JFrame();
+					 JOptionPane.showMessageDialog(parent, diag);
 				}
-				
-				if(!books.IsEmpty()) printTable(books);
-			 }
-			 if(books.IsEmpty())
-			 {
-				 String diag = "Author has no books in Library!";
-				 JFrame parent = new JFrame();
-				 JOptionPane.showMessageDialog(parent, diag);
-			 }
-		 }
-		 
+			}
 		}
 	}
 	
@@ -147,18 +142,20 @@ public class Main
 		//rowData contains only one book
 		else if(books == null)
 		{
-			rowData = new String[1][4];
+			rowData = new String[1][6];
 			rowData[0][0] = name.getTitle(); 
 			rowData[0][1] = name.getAuthor();
 			rowData[0][2] = "In";
 			rowData[0][3] = Integer.toString(name.getImportance());
+			rowData[0][4] = name.getOwner();
+			rowData[0][5] = name.getStaff();
 		}
 		
 		//rowData contains list of books of certain author
 		else
 		{
 			books.First();
-			rowData = new String[books.GetSize()][4];
+			rowData = new String[books.GetSize()][6];
 			for(int i=0; i<books.GetSize(); i++, books.Next())
 			{
 				name = books.GetValue();
@@ -166,57 +163,67 @@ public class Main
 				rowData[i][1] = name.getAuthor();
 				rowData[i][2] = "In";
 				rowData[i][3] = Integer.toString(name.getImportance());
+				rowData[i][4] = name.getOwner();
+				rowData[i][5] = name.getStaff();
 				
 			}
 		}
 		
-		
-		Object[]colName = {"Title","Author","Status","Importance"};
+		Object[]colName = {"Title","Author","Status","Importance","Owner","Staff"};
 		JTable table = new JTable(rowData, colName);
 		javax.swing.table.TableColumn column = null;
 		
 		for (int cell = 0; cell < 4; cell++) 
 		{
 			column = table.getColumnModel().getColumn(cell);
-			if (cell == 0) 
-			{
-				column.setPreferredWidth(250); //First column is bigger
-			} 
-			else if (cell == 1)
-			{
-				column.setPreferredWidth(100); //Second column
-			}
-			else 
-			{
-				column.setPreferredWidth(60);
-			}
+			
+			if (cell == 0) column.setPreferredWidth(250); 
+			else if (cell == 1) column.setPreferredWidth(100); 
+			else column.setPreferredWidth(60);
+			
 		}
 		
 		if(num == 1)
 		{
-			UIManager UI = new UIManager();
+			UIManager UIManager = new UIManager();
 			UIManager.put("OptionPane.background", new ColorUIResource(255, 0, 0));
+			UIManager.put("OptionPane.minimumSize", new Dimension(750, 500));
 			UIManager.put("Panel.background", new ColorUIResource(255, 0, 0));
 			JOptionPane.showMessageDialog(null, new JScrollPane(table), "SetColor", JOptionPane.WARNING_MESSAGE);
 			library.endProgram();
 		}
 		
-		else JOptionPane.showMessageDialog(null, new JScrollPane(table));
+		else
+		{
+			UIManager UIManager = new UIManager();
+			UIManager.put("OptionPane.minimumSize", new Dimension(1000, 500));
+			JOptionPane.showMessageDialog(null, new JScrollPane(table));
+			UIManager.put("OptionPane.minimumSize", new Dimension(0, 0));
+		}
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Main main = new Main();
 		Scanner file = new Scanner(new File("booksCopy.txt"));
+		Scanner names = new Scanner(new File("Names.txt"));
 		
 		
 		while(file.hasNextLine())
 		{
+			String name = " ";
 			String line = file.nextLine();
 			String[] split = line.split(", ");
-			library.books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3])));
+			if(Integer.parseInt(split[2]) == 0)
+			{
+				name = names.nextLine();
+				//System.out.println(name);
+			}
+			
+			library.books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3]), name, "Lori"));
 		}
-
+		
+		names.close();
 		file.close();
 		
 		int user = 0;

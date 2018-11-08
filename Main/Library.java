@@ -46,7 +46,7 @@ public class Library
 	//Prints current state of library, boolean print changes whether method prints to console or not
 	public String[][] printLibrary(boolean print)
 	{
-		String[][] library = new String[books.GetSize()][4];
+		String[][] library = new String[books.GetSize()][6];
 		largestTitle = "";
 		largestAuthor = "";
 		String currAuthor;
@@ -59,6 +59,8 @@ public class Library
 			library[i][1] = currAuthor = books.GetValue().getAuthor();
 			library[i][2] = Integer.toString(books.GetValue().getStatus());
 			library[i][3] = Integer.toString(books.GetValue().getImportance());
+			library[i][4] = books.GetValue().getOwner();
+			library[i][5] = books.GetValue().getStaff();
 
 			if(currTitle.length() > largestTitle.length()) largestTitle = currTitle;
 			if(currAuthor.length() > largestAuthor.length()) largestAuthor = currAuthor;
@@ -158,12 +160,12 @@ public class Library
 		Library library = new Library();
 		Scanner file = new Scanner(new File("books.txt"));
 
-		while(file.hasNextLine())
+		/* while(file.hasNextLine())
 		{
 			String line = file.nextLine();
 			String[] split = line.split(", ");
 			books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3])));
-		}
+		} */
 
 		file.close();
 	}
