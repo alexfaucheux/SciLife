@@ -286,7 +286,6 @@ public class Main
 				if(Integer.parseInt(split[2]) == 0)
 				{
 					name = names.nextLine();
-					System.out.println(name);
 					staff = "Lori";
 				}
 				
@@ -435,11 +434,12 @@ public class Main
 										else
 											JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
 										
+										library.check("out", credentials.staff, owner);
 										int size = library.getStackSize();
 										
 										if(result == 0 && size != 0)
 										{
-											library.check("out", credentials.staff, owner);
+											//library.check("out", credentials.staff, owner);
 											JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Left The Building."));
 										}
 									}
