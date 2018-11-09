@@ -16,8 +16,12 @@ public class Main
 	static List<String> title = new List<String>();
 	static Library library = new Library();
 	
+	// Searches the list of books by title or/and author and displays the results.
+	// it also can display a partial title search. 
 	public void search() throws IOException
 	{
+		
+		// Ask for the title or/and author the user is looking for
 		JTextField Title = new JTextField(5);
 		JTextField Author = new JTextField(5);
 
@@ -32,21 +36,28 @@ public class Main
 
 		if (result == JOptionPane.OK_OPTION) 
 		{
+			
+			// Checks if the user inputed a title and author
 			if(!Title.getText().equals("") && !Author.getText().equals(""))
 			{
 				 boolean AuthorExist = false;
 				 boolean BookExist = false;
 				 boolean checkedIn = true;
 				 
-				 
+				 // Searches for all the books matches the author the user inputed and stores it in a linked list 
 				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
+				 
+				 // If list of books is not empty 
 				 if(!books.IsEmpty()) 
 				 {
+					 
+					 // If author exist and part of the title was entered it will 
+					 // removes all books that does not match the partial title that was inputed 
 					 AuthorExist = true;
 					 books = library.mod.partialSearch(Title.getText(), books);
 				 }
 				 
-				 // True if author has at least 1 book
+				 // True if author and the partial title search has at least 1 book
 				 if(!books.IsEmpty())
 				 {
 					 BookExist = true;
@@ -59,7 +70,7 @@ public class Main
 					 printTable(books);
 				 }
 
-	 
+				 // If author or title does not exist 
 				 if(!AuthorExist || !BookExist)
 				 {
 					 String diag = (!AuthorExist ? "Author does not exist in library!" :
@@ -71,11 +82,17 @@ public class Main
 				 }
 			}
 		 
+			// If the user only inputed a title 
+			// it searches for all the title for what the inputed
 			else if(!Title.getText().equals(""))
 			{
+				
+				// finds and saves all the titles that is related to what the user inputed in books
 				List<Book> books = library.mod.partialSearch(Title.getText(), library.books);
 				List<Book> checkedIn = new List<Book>();
 				 
+				// All the list books in books that are checked in 
+				// is inserted in the checkedIn list
 				if(!books.IsEmpty())
 				{
 					books.First();
@@ -87,6 +104,7 @@ public class Main
 					if(!checkedIn.IsEmpty()) printTable(checkedIn);
 				}
 				
+				// If books or checkedIn is empty it displays a warning
 				if(books.IsEmpty() || checkedIn.IsEmpty())
 				{
 					String diag = (books.IsEmpty() ? "No results match your search!" : "No results are checked in!");
@@ -94,12 +112,17 @@ public class Main
 					JOptionPane.showMessageDialog(parent, diag);
 				}
 			}
-		 
+			
+			// If the user only inputed an author 
 			else if(!Author.getText().equals(""))
 			{
+				
+				 // Buts all the books that mathch the user input in a list of books
 				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
 				 if(!books.IsEmpty())
 				 {
+					 
+					// Searchs throw the books list and removes all the books that are checked out
 					books.First();
 					for(int i=0; i<books.GetSize(); i++, books.Next())
 					{
@@ -108,6 +131,8 @@ public class Main
 					
 					if(!books.IsEmpty()) printTable(books);
 				 }
+				 
+				// If the books list is empty is displays a warning
 				if(books.IsEmpty())
 				{
 					 String diag = "Author has no books in Library!";
@@ -120,40 +145,40 @@ public class Main
 	
 	
 	
-	//prints entire library
+	// Prints entire library
 	public void printTable() throws IOException
 	{
 		printTable(null, null, 0);
 	}
 	
-	//prints only one book
+	// Prints only one book
 	public void printTable(Book name) throws IOException
 	{
 		printTable(name, null, 0);
 	}
 	
-	//prints specified list of books
+	// Prints specified list of books
 	public void printTable(List<Book> books) throws IOException
 	{
 		printTable(null, books, 0);
 	}
 	
-	//prints table with color
+	// Prints table with color
 	public void printTable(List<Book> books, int num) throws IOException
 	{
 		printTable(null, books, num);
 	}
 	
-	
+	// Prints its parameters to a 2D Jtable
 	public void printTable(Book name, List<Book> books, int num) throws IOException
 	{
 		String[][] rowData = null;
 		
-		//rowData contains all books in library
+		// RowData contains all books in library
 		if(name == null && books == null) 
 			rowData = library.printLibrary(false);
 		
-		//rowData contains only one book
+		// RowData contains only one book
 		else if(books == null)
 		{
 			rowData = new String[1][6];
@@ -165,7 +190,7 @@ public class Main
 			rowData[0][5] = name.getStaff();
 		}
 		
-		//rowData contains list of books of certain author
+		// RowData contains list of books of certain author
 		else
 		{
 			books.First();
@@ -183,6 +208,7 @@ public class Main
 			}
 		}
 		
+		// Displays the books when sorted by author or title is selected 
 		Object[]colName = {"Title","Author","Status","Importance","Owner","Staff"};
 		JTable table = new JTable(rowData, colName);
 		javax.swing.table.TableColumn column = null;
@@ -191,12 +217,14 @@ public class Main
 		{
 			column = table.getColumnModel().getColumn(cell);
 			
+			// creates the appropriate size for the sections
 			if (cell == 0) column.setPreferredWidth(250); 
 			else if (cell == 1) column.setPreferredWidth(100); 
 			else column.setPreferredWidth(60);
 			
 		}
 		
+		// if emergency is selected it changes the color of the Jtable 
 		if(num == 1)
 		{
 			UIManager UIManager = new UIManager();
@@ -216,11 +244,18 @@ public class Main
 		}
 	}
 	
+	// Main
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Main main = new Main();
 		UserPassword credentials = new UserPassword();
 		
+		/*
+		IF the user does not have a booksCopy file is will read what they have 
+		then and create a booksCopy file for them so they will alwasy have the 
+		original list of books.
+		After creating the booksCopy file the program will only alter the booksCopy file
+		*/
 		try
 		{
 			Scanner file = new Scanner(new File("booksCopy.txt"));
@@ -235,6 +270,7 @@ public class Main
 			file.close();
 		}
 		
+		// If booksCopy does not exist
 		catch (Exception e)
 		{
 			Scanner names = new Scanner(new File("Names.txt"));
@@ -261,6 +297,8 @@ public class Main
 			file.close();
 		}
 		
+		// This screen will continue until the user clicks Exit Library or the 'X' at the 
+		// top right of the menu
 		int user = 0;
 		while (user == 0 || user == 1)
 		{
@@ -270,20 +308,32 @@ public class Main
 			//Administrator
 			if (user == 0)
 			{
+				
 				String masteropt = null;
+				
+				// If Admin is selected it will prompt for a username and password
 				String type = credentials.username_password();
+				
+				// If canacel is not selected
 				if(!type.equals("cancel"))
 				{
+					
+					// if the username and password equaled the masters info
 					if(type.equals("master")) masteropt = "Manage Users";
 					int adminOpt = 0;
+					
+					// Will continue until the user clicks back or the 'X' in the top right corner
 					while (adminOpt  == 0 || adminOpt == 1 || adminOpt == 2 || adminOpt == 3 || adminOpt == 4 || adminOpt == 5 || (adminOpt == 6 && type.equals("master")))
 					{
+						
+						// Checks if the user is the master or not 
+						// The master is the only person that can Manage User
 						Object[] options2 = (type.equals("master") ? new Object[]{"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", masteropt, "Back"} : 
 											new Object[]{"Sort By Title", "Sort By Author", "Search", "Check in ", "Check out", "Emergency", "Back"}); 
 						
 						adminOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "Administrator", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
 						
-						//Sort
+						// Sorts by title or author
 						if (adminOpt  == 0 || adminOpt == 1)
 						{
 							String sortby = (adminOpt == 0 ? "title" : "author");
@@ -292,13 +342,13 @@ public class Main
 							main.printTable();
 						}
 
-						//Search
+						// Search
 						if (adminOpt  == 2)
 						{
 							main.search();
 						}
 						
-						//Check In
+						// Check In
 						if (adminOpt  == 3)
 						{
 							int result = 1;
@@ -306,7 +356,8 @@ public class Main
 							{
 								Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
 								
-								
+								// Ask for the title of the book that is being checked in
+								// and has the option to check in multiple books 
 								JFrame frame = new JFrame();
 								JPanel panel = new JPanel();
 								panel.add(new JLabel("Book Title:"));
@@ -345,7 +396,7 @@ public class Main
 						}
 					
 						
-						//Check Out
+						// Check Out
 						else if (adminOpt  == 4)
 						{	
 							int result = 1;
@@ -353,6 +404,7 @@ public class Main
 							{
 								Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
 								
+								// Ask the user for the book title
 								JFrame frame = new JFrame();
 								JPanel panel = new JPanel();
 								panel.add(new JLabel("Book Title:"));
@@ -366,6 +418,7 @@ public class Main
 								if(result != 2)
 								{
 									
+									// Ask the user for the name of the person who is checking the book out
 									String owner = JOptionPane.showInputDialog(frame, "Enter Full Name: ");
 									if(owner.split(" ").length == 2)
 									{
@@ -396,12 +449,15 @@ public class Main
 							}
 						}
 
-
+						// If admin clicked the emergency
+						// Sorts all checked in books by importance and stores it 
+						// to booksCopy then exits the program
 						else if (adminOpt  == 5)
 						{
 							main.printTable(library.Emergency(), 1);
 						}
 						
+						// The master is the only one that can manage the users
 						else if(adminOpt == 6 && type.equals("master"))
 						{
 							credentials.displayOptions();

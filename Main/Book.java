@@ -1,5 +1,5 @@
  
-
+// Getters and setters for all the book objects  
 public class Book
 {
 	String owner;

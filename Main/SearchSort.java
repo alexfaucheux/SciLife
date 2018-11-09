@@ -4,8 +4,9 @@ import Tools.*;
 class SearchSort
 {
 	Tools tools = new Tools();
-	//Performs a quick sort operation based on token parameter
-	//	Options for token are: title, author, or importance
+	
+	// Performs a quick sort operation based on token parameter
+	// Options for token are: title, author, or importance
 	public List<Book> quickSort(List<Book> books, String token)
     {
         if((books.GetSize() == 1) || (books.IsEmpty()))
@@ -70,8 +71,8 @@ class SearchSort
         return lessThan;
     }
 
-	//Searches the list of books for any books containing a specified
-	//	substring
+	// Searches the list of books for any books containing a specified
+	// substring
 	public List<Book> partialSearch(String searchVal, List<Book> books)
 	{
 		books = quickSort(books, "title");
@@ -87,39 +88,18 @@ class SearchSort
 				bookList.InsertAfter(books.GetValue());
 		}
 		
-//This was me being dumb, please ignore
-/*
-		books.First();
-		//If searching for one word (i.e. all titles containing "The")
-		if(searchVal.split(" ").length == 1)
-		{
-			for(int j = 0; j < books.GetSize(); j++, books.Next())
-				for(int k = 0; k < books.GetValue().getTitle().split(" ").length; k++)
-					if(books.GetValue().getTitle().split(" ")[k].equals(searchVal))
-						bookList.InsertAfter(books.GetValue());
-		}
-		//If searching for a string within a title
-		else
-		{
-			for(int j = 0; j < books.GetSize(); j++, books.Next())
-				for(int k = 0; (k + searchVal.length()) < books.GetValue().getTitle().length(); k++)
-					if(searchVal.equals(books.GetValue().getTitle().substring(k, (k + searchVal.length()))))
-						bookList.InsertAfter(books.GetValue());
-		}
-*/
-
 		return bookList;
 	}
 
-	//default method call for searchByTitle, sorts books by title and then calls binary
-	//	search method with appropriate parameters
+	// Default method call for searchByTitle, sorts books by title and then calls binary
+	// search method with appropriate parameters
 	public Book searchByTitle(String searchVal, List<Book> books)
 	{
 		books = quickSort(books, "title");
 		return searchByTitle(0, books.GetSize(), searchVal, books);
 	}
 
-	//Binary searches books for book title
+	// Binary searches books for book title
 	public Book searchByTitle(int low, int high, String searchVal, List<Book> books)
 	{
 		if(high < low)
@@ -137,7 +117,7 @@ class SearchSort
 		return null;
 	}
 
-	//Binary searches for book written by author in books and returns location of author instance
+	// Binary searches for book written by author in books and returns location of author instance
 	public int searchByAuthor(int low, int high, String searchVal, List<Book> books)
 	{
 		if(high < low)
@@ -155,17 +135,17 @@ class SearchSort
 		return -1;
 	}
 
-	//Returns List of type Book containing all books written by input author
+	// Returns List of type Book containing all books written by input author
 	public List<Book> booksByAuthor(String author, List<Book> books)
 	{
 		books = quickSort(books, "author");
 		List<Book> booksByAuth = new List<Book>();
 		int authorIndex = searchByAuthor(0, books.GetSize(), author, books);
 
-		//Does not execute if author is not found
+		// Does not execute if author is not found
 		if(authorIndex != -1)
 		{
-			//Moves forward in list until first book by author is found
+			// Moves forward in list until first book by author is found
 			books.SetPos(authorIndex);
 			while(books.GetValue().getAuthor().equals(author))
 			{
@@ -174,7 +154,7 @@ class SearchSort
 					authorIndex = books.GetPos();
 			}
 
-			//Appends books to booksByAuth until book not written by input author is found
+			// Appends books to booksByAuth until book not written by input author is found
 			books.SetPos(authorIndex);
 			while(books.GetValue().getAuthor().equals(author))
 			{

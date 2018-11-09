@@ -32,18 +32,18 @@ public class Library
 	private Stack<Book> returns = new Stack<Book>();
 
 
-	//Used to repeat characters
+	// Used to repeat characters
     public static String repeat(int count, String with) {
         return new String(new char[count]).replace("\0", with);
     }
 
-	//Prints current state of library to console
+	// Prints current state of library to console
 	public String[][] printLibrary()
 	{
 		return printLibrary(true);
 	}
 
-	//Prints current state of library, boolean print changes whether method prints to console or not
+	// Prints current state of library, boolean print changes whether method prints to console or not
 	public String[][] printLibrary(boolean print)
 	{
 		String[][] library = new String[books.GetSize()][6];
@@ -69,7 +69,7 @@ public class Library
 		if(print) System.out.println("Title:" + repeat(largestTitle.length() - "Titles:".length() + 3, " ") +
 									 "Author:" + repeat(largestAuthor.length() - "Author:".length() + 1, " ") +
 									 "Checked In/Out:    Importance:\n");
-		//prints 2d array
+		// Prints 2d array
         for(int i=0; i<library.length; i++)
         {
             for(int k=0; k<4; k++)
@@ -90,8 +90,8 @@ public class Library
         return library;
 	}
 
-	//Brute force searches linked list for title or author and sets curr to search
-	//	value location. Token is title or author, key is value to search for
+	// Brute force searches linked list for title or author and sets curr to search
+	// value location. Token is title or author, key is value to search for
 	public boolean Contains(String token, String key, List<Book> books)
 	{
 		String bookToken = "";
@@ -111,28 +111,28 @@ public class Library
 	}
 
 
-	//In the event of an emergency, function will quick sort books by importance
-	//	and return list of books currently checked-in in order of importance
+	// In the event of an emergency, function will quick sort books by importance
+	// and return list of books currently checked-in in order of importance
 	public List<Book> Emergency()
 	{
 		books = mod.quickSort(books, "importance");
 		return books;
 	}
 
-	//Allows regular user to add book to be returned to the returns stack
+	// Allows regular user to add book to be returned to the returns stack
 	public void returnBook(String title)
 	{
 		Book toReturn = mod.searchByTitle(title, books);
 		returns.Push(toReturn);
 	}
 
-	//Override
+	// Override
 	public void check(String op)
 	{
 		check(op, null, null);
 	}
 	
-	//Allows admin/librarian to check in all books in the returns stack
+	// Allows admin/librarian to check in all books in the returns stack
 	public void check(String op, String staff, String owner)
 	{
 		int status = (op.equals("in") ? 1 : op.equals("out") ? 0 : -1);
@@ -155,11 +155,12 @@ public class Library
 		}
 	}
 
-	//Outputs library to a text file and terminates program execution
+	// Outputs library to a text file and terminates program execution
 	public void endProgram() throws IOException
 	{
 		books = mod.quickSort(books, "title");
-		//Prints output to file, from Blue Pelican Java
+		
+		// Prints output to file, from Blue Pelican Java
 		FileWriter fw = new FileWriter("booksCopy.txt");
 		PrintWriter output = new PrintWriter(fw);
 		books.First();
@@ -173,27 +174,6 @@ public class Library
 		output.close();
 		fw.close();
 		System.exit(0);
-	}
-
-	public static void main(String [] args) throws FileNotFoundException
-	{
-		Library library = new Library();
-		Scanner file = new Scanner(new File("books.txt"));
-
-		/* while(file.hasNextLine())
-		{
-			String line = file.nextLine();
-			String[] split = line.split(", ");
-			books.InsertAfter(new Book(split[0], split[1], Integer.parseInt(split[2]), Integer.parseInt(split[3])));
-		} */
-
-		file.close();
-/*
-		List<Book> partial= mod.partialSearch("he", books);
-		partial.First();
-		for(int j = 0; j < partial.GetSize(); j++, partial.Next())
-			System.out.println(partial.GetValue().getTitle());
-*/
 	}
 
 	public int getStackSize()
