@@ -1,7 +1,9 @@
 import Tools.StacksQueues.*;
+import Tools.*;
 
 class SearchSort
 {
+	Tools tools = new Tools();
 	//Performs a quick sort operation based on token parameter
 	//	Options for token are: title, author, or importance
 	public List<Book> quickSort(List<Book> books, String token)
@@ -77,9 +79,14 @@ class SearchSort
 
 		books.First();
 		for(int j = 0; j < books.GetSize(); j++, books.Next())
-			if(books.GetValue().getTitle().toLowerCase().contains(searchVal.toLowerCase()))
+		{
+			String title = books.GetValue().getTitle();
+			title = title.toUpperCase();
+			searchVal = searchVal.toUpperCase();
+			if(title.contains(searchVal))
 				bookList.InsertAfter(books.GetValue());
-
+		}
+		
 //This was me being dumb, please ignore
 /*
 		books.First();

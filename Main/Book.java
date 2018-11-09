@@ -55,8 +55,18 @@ public class Book
 		return owner;
 	}
 	
+	public void setOwner(String owner)
+	{
+		this.owner = owner;
+	}
+	
 	public String getStaff()
 	{
 		return staff;
+	}
+	
+	public void setStaff(String staff)
+	{
+		this.staff = staff;
 	}
 }

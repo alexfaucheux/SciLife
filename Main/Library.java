@@ -126,14 +126,32 @@ public class Library
 		returns.Push(toReturn);
 	}
 
-	//Allows admin/librarian to check in all books in the returns stack
-	public void check(String whatnow)
+	//Override
+	public void check(String op)
 	{
-		int ohOkay = (whatnow.equals("in") ? 1 : whatnow.equals("out") ? 0 : -1);
+		check(op, null, null);
+	}
+	
+	//Allows admin/librarian to check in all books in the returns stack
+	public void check(String op, String staff, String owner)
+	{
+		int status = (op.equals("in") ? 1 : op.equals("out") ? 0 : -1);
+		
 		while(!returns.IsEmpty())
 		{
 			Contains("title", returns.Pop().getTitle(), books);
-			books.GetValue().setStatus(ohOkay);
+			books.GetValue().setStatus(status);
+			if(status == 1)
+			{
+				books.GetValue().setOwner(" ");
+				books.GetValue().setStaff(" ");
+			}
+			
+			if(status == 0)
+			{
+				books.GetValue().setOwner(owner);
+				books.GetValue().setStaff(staff);
+			}
 		}
 	}
 
@@ -149,7 +167,9 @@ public class Library
 			output.println(books.GetValue().getTitle() + ", " +
 						   books.GetValue().getAuthor() + ", " +
 						   books.GetValue().getStatus() + ", " +
-						   books.GetValue().getImportance());
+						   books.GetValue().getImportance() + ", " + 
+						   books.GetValue().getOwner() + ", " +
+						   books.GetValue().getStaff() + ", ");
 		output.close();
 		fw.close();
 		System.exit(0);

@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.Dimension;
 
-public class UserPassword {
-
+public class UserPassword 
+{
 	String[] masterUser = new String[2];
 	String[] usernameList = new String[10];
 	String[] passwordList = new String[10];
+	public String staff;
 
 	/* public static void main(String[] args) throws FileNotFoundException {
 
@@ -25,16 +25,16 @@ public class UserPassword {
 	   
 	public String username_password() throws FileNotFoundException {
 		int loop = 0;
-		File file = new File(
-				"Username&Password");
-		File file2 = new File(
-				"MasterUser");
+		File file = new File("Username&Password");
+		File file2 = new File("MasterUser");
 
 		Scanner sc1 = new Scanner(file2);
 
 		masterUser = sc1.nextLine().split(" ");
 		Scanner sc = new Scanner(file);
-		while (sc.hasNext()) {
+		
+		while (sc.hasNext())
+		{
 			String[] makeList = sc.nextLine().split(" ");
 
 			if (makeList[0] != null) {
@@ -43,13 +43,15 @@ public class UserPassword {
 			}
 			loop += 1;
 		}
+		
 		sc1.close();
 		sc.close();
 		boolean master = false;
 		boolean correct = false;
 		int loginOpt = 0;
 
-		while (loginOpt == 0) {
+		while (loginOpt == 0) 
+		{
 			JTextField username = new JTextField();
 			JTextField password = new JPasswordField();
 			Object[] loginMessage = { "Username:", username, "Password:", password };
@@ -60,20 +62,25 @@ public class UserPassword {
 				if (!username.getText().equals("") && !password.getText().equals("")) {
 
 					// checks if the user name and password is correct
-					for (int i = 0; i < usernameList.length; i++) {
+					for (int i = 0; i < usernameList.length; i++) 
+					{
 						if (username.getText().equals(masterUser[0]) && password.getText().equals(masterUser[1])) {
+							staff = masterUser[0];
 							master = true;
 							correct = true;
 							break;
-						} else if (username.getText().equals(usernameList[i])
-								&& password.getText().equals(passwordList[i])) {
+						} 
+						
+						else if (username.getText().equals(usernameList[i]) && password.getText().equals(passwordList[i])) 
+						{
+							staff = usernameList[i];
 							correct = true;
-
 							break;
 						}
-						if (usernameList[i] == null) {
+						
+						if (usernameList[i] == null) 
+						{
 							break;
-
 						}
 					}
 
@@ -100,19 +107,45 @@ public class UserPassword {
 		while (masterOptResult == 0 || masterOptResult == 1) {
 
 			// if the user name and password is the master it will go here
-			Object[] masterOPt = { "Add a new user", "Remove user", "No, thanks", "back" };
+			Object[] masterOPt = { "Add a new user", "Remove user", "Display Users", "back" };
 			masterOptResult = JOptionPane.showOptionDialog(null, "Welcome Master", "Administrater",
 							  JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, masterOPt,
 							  masterOPt[0]);
 			
-			if (masterOptResult == 0) {
+			if (masterOptResult == 0) 
+			{
 				addNewUser();
 				updateUser();
 			} 
 			
-			else if (masterOptResult == 1) {
+			else if (masterOptResult == 1) 
+			{
 				removeUser();
 				updateUser();
+			}
+			
+			else if(masterOptResult == 2)
+			{
+				Object[][] rowData = new Object[usernameList.length][1];
+				
+				for(int i=0; i<rowData.length; i++)
+				{
+					rowData[i][0] = usernameList[i];
+				}
+				
+				Object[]colName = {"Users"};
+				JTable table = new JTable(rowData, colName);
+				javax.swing.table.TableColumn column = null;
+				
+				
+				column = table.getColumnModel().getColumn(0);
+				
+				column.setPreferredWidth(250);
+					
+				
+				UIManager.put("OptionPane.minimumSize", new Dimension(100, 0));
+				JOptionPane.showMessageDialog(null, new JScrollPane(table));
+				UIManager.put("OptionPane.minimumSize", new Dimension(100, 100));
 			}
 		}
 	}		
@@ -133,7 +166,18 @@ public class UserPassword {
 		outputStream.println(print_file);
 		outputStream.close();
 	}
-
+	
+	public void updateList(String[] list)
+	{ 
+		int k = -1;
+		for(int i=0; i<list.length; i++)
+		{
+			if(list[i] == null) k = i;
+			if(list[i] != null && k != -1){ list[k] = list[i]; list[i] = null; k = i;}
+		}
+	}
+			
+		
 	public void updateMaster() throws FileNotFoundException {
 		String print_file = "";
 		print_file += (masterUser[0] + " ");
@@ -144,8 +188,6 @@ public class UserPassword {
 		outputStream.println(print_file);
 		outputStream.close();
 	}
-
-	
 	
 
 	public void removeUser() throws FileNotFoundException {
@@ -170,22 +212,30 @@ public class UserPassword {
 						String enteredUsername = JOptionPane.showInputDialog("What is the username that you would like to remove?");
 
 						if (enteredUsername == null)
-							remove_user = 1;
+							break;
 						
-						else if (!enteredUsername.equals("")) {
-							if (!enteredUsername.equals(masterUser[0])) {
+						else if (!enteredUsername.equals(""))
+						{
+							if (!enteredUsername.equals(masterUser[0])) 
+							{
 								boolean remove = false;
-								for (int j = 0; j < usernameList.length; j++) {
-									if (usernameList[j] != null) {
-										if (usernameList[j].equals(enteredUsername)) {
+								for (int j = 0; j < usernameList.length; j++) 
+								{
+									if (usernameList[j] != null) 
+									{
+										if (usernameList[j].equals(enteredUsername)) 
+										{
 											usernameList[j] = null;
 											passwordList[j] = null;
 											remove = true;
+											updateList(usernameList);
+											updateList(passwordList);
 											int answer = JOptionPane.showConfirmDialog(null,
 													"Would you like to remove another user?", "Master",
 													JOptionPane.YES_NO_OPTION);
 
-											if (answer != 0) {
+											if (answer == 1) 
+											{
 												remove_user = 1;
 											}
 											break;
@@ -197,7 +247,10 @@ public class UserPassword {
 									JOptionPane.showMessageDialog(null,
 											"The username does not exist. \nPlease try again");
 								}
-							} else if (enteredUsername.equals(masterUser[0])) {
+							} 
+							
+							
+							else if (enteredUsername.equals(masterUser[0])) {
 								int areUsure = JOptionPane.showConfirmDialog(null,
 										"Are you sure you want to change the master user?", "Master",
 										JOptionPane.YES_NO_OPTION);
