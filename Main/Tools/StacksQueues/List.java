@@ -1,12 +1,4 @@
 package Tools.StacksQueues;
-
-
-/* ***************************************************
- * <your name>
- * <the date>
- *
- * List Class - handles any form of data
- *************************************************** */
  
 /*
 Methods:
@@ -19,9 +11,6 @@ Next		InsertAfter		Equals
 			
 public class List<Type>
 {
-    // We don't actually have to set a max size with linked lists
-    // But it is a good idea.
-    // Just picture an infinite loop adding to the list! :O
     public static final int MAX_SIZE = 5000;
 
     private Node<Type> head;
@@ -32,7 +21,6 @@ public class List<Type>
     private int size;
 
     // constructor
-    // remember that an empty list has a "size" of -1 and its "position" is at -1
     public List()
     {
         head = tail = curr = new Node();
@@ -78,8 +66,8 @@ public class List<Type>
     }
 
     // navigates to the specified element (0-index)
-    // this should not be possible for an empty list
-    // this should not be possible for invalid positions
+    // not possible for an empty list
+    // not possible for invalid positions
     public void SetPos(int pos)
     {
 		//curr = head;
@@ -95,8 +83,8 @@ public class List<Type>
     }
 
     // navigates to the previous element
-    // this should not be possible for an empty list
-    // there should be no wrap-around
+    // not possible for an empty list
+    // there is no wrap-around
     public void Prev()
     {
         Node<Type> tmp = head;
@@ -112,8 +100,8 @@ public class List<Type>
 
     
     // navigates to the next element
-    // this should not be possible for an empty list
-    // there should be no wrap-around
+    // not possible for an empty list
+    // there is no wrap-around
     public void Next()
     {
 		if(!IsEmpty()) 
@@ -159,7 +147,7 @@ public class List<Type>
 
     // inserts an item before the current element
     // the new element becomes the current
-    // this should not be possible for a full list
+    // not possible for a full list
     public void InsertBefore(Type data)
     {
         Node<Type> tmp = head;
@@ -185,7 +173,7 @@ public class List<Type>
 
     // inserts an item after the current element
     // the new element becomes the current
-    // this should not be possible for a full list
+    // not possible for a full list
     public void InsertAfter(Type data)
     {
         if(!this.IsEmpty() && this.GetSize() < MAX_SIZE)
@@ -201,7 +189,7 @@ public class List<Type>
     }
 
     // removes the current element 
-    // this should not be possible for an empty list
+    // not possible for an empty list
     public void Remove()
     {
         if(!this.IsEmpty())
@@ -215,7 +203,7 @@ public class List<Type>
     }
 
     // replaces the value of the current element with the specified value
-    // this should not be possible for an empty list
+    // not possible for an empty list
     public void Replace(Type data)
     {
         if(!this.IsEmpty())
@@ -253,9 +241,9 @@ public class List<Type>
     }
 
     // returns the concatenation of two lists
-    // l should not be modified
-    // l should be concatenated to the end of *this
-    // the returned list should not exceed MAX_SIZE elements
+    // l is not modified
+    // l is concatenated to the end of *this
+    // the returned list does not exceed MAX_SIZE elements
     // the last element of the new list is the current
     public List<Type> Add(List<Type> l)
     {
@@ -283,9 +271,8 @@ public class List<Type>
         return tmpList;
     }
 
-	//Added method
-	//returns true if data is in list
-	//If true, curr is set to position of data
+	// returns true if data is in list
+	// If true, curr is set to position of data
 	public boolean Contains(Type data)
 	{
 		if(this.IsEmpty()){return false;}
@@ -300,7 +287,7 @@ public class List<Type>
 		
 		
     // returns a string representation of the entire list (e.g., 1 2 3 4 5)
-    // the string "NULL" should be returned for an empty list
+    // the string "NULL" is returned for an empty list
     public String toString()
     {
         if(this.IsEmpty()){return "NULL";}

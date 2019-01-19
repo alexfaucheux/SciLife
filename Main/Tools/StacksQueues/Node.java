@@ -1,37 +1,19 @@
 package Tools.StacksQueues;
 
-/***************************************************
- * <your name>
- * <the date>
- *
- * Node Class - handles any form of data
- *************************************************** */
-
-/*
-Was not sure if we could edit this file but since there was nothing in this file that
-said otherwise, I assumed we could.
-
-I changed "getLink" to "getNext" because it made programming the List class much easier and much more coherent for me. 
-I need variables and methods to tell me exactly what they do for me to remember/understand how to use them.
-So Curr.getNext() to refer to the next element in the linked list made so much more sense to me
-than Curr.getLink() did. Some reason, using Curr.getLink() really confused me at the start so it had to change.
-
-Also added a constuctor that took data and a link, which was primarily for insertAfter/insertBefore.
-*/
-
+// Node class for List<Type> (Custom Linked List)
 class Node<Type>
 {
 	private Type data;
 	private Node<Type> link;
 
-	// constructor
+	// Constructor for empty node
 	public Node()
 	{
 		this.data = null;
 		this.link = null;
 	}
 	
-	//Added constructor
+	// Constructor for set node
 	public Node(Type data, Node<Type> link)
 	{
 		this.data = data;
