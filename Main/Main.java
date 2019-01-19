@@ -32,6 +32,7 @@ import javafx.scene.control.TableColumn;
 
 public class Main
 {
+	// List<Type> is a custom Linked List class
 	static List<String> title = new List<String>();
 	static Library library = new Library();
 	
