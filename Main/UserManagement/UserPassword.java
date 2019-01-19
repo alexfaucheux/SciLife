@@ -88,15 +88,15 @@ public class UserPassword
 					else if(correct && !master) return "admin";
 					
 					else JOptionPane.showMessageDialog(null, "Username or password was incorrect");
-					}
-					
 				}
+					
+			}
 
 			else return "cancel";
 					
-			} 
+		} 
 		return "";	
-		}
+	}
 
 		
 	

@@ -1,3 +1,22 @@
+/*
+Created by: Alex Faucheux, Josh Romero, and Eric Pitts
+Date last modified: 11/9/2018
+
+
+	Data Structures Used:
+		Stack - Used to emulate returning/checking out books, books being returned/checked out
+			by a user are added to a stack, so the librarian must check books in/out from the top
+			of the stack first.
+			
+		Linked List - Used a linked list for library because of its ease in adding and
+			removing titles from the library, and from its simplicity to sort by different
+			parameters.
+			
+		2D Array - Used to make a table of book properties in order to facilitate printing the
+			library both to the console and to a GUI.
+*/
+
+
 import Tools.*;
 import Tools.StacksQueues.*;
 import UserManagement.*;
@@ -251,9 +270,10 @@ public class Main
 		UserPassword credentials = new UserPassword();
 		
 		/*
-		IF the user does not have a booksCopy file is will read what they have 
-		then and create a booksCopy file for them so they will alwasy have the 
-		original list of books.
+		IF there is not a custom database located in directory (namely booksCopy.txt),
+		open and load the original (books.txt).
+		When program is exited, it will create a booksCopy file that will save the current
+		state of the database, and if the file is not deleted, the program will load booksCopy when ran.
 		After creating the booksCopy file the program will only alter the booksCopy file
 		*/
 		try
@@ -398,28 +418,29 @@ public class Main
 						// Check Out
 						else if (adminOpt  == 4)
 						{	
-							int result = 1;
-							while(result == 1)
+							JFrame frame = new JFrame();
+							
+							// Ask the user for the name of the person who is checking the book out
+							String owner = JOptionPane.showInputDialog(frame, "Enter Customer's Full Name: ");
+							if(owner != null) if(owner.split(" ").length == 2)
 							{
-								Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
-								
-								// Ask the user for the book title
-								JFrame frame = new JFrame();
-								JPanel panel = new JPanel();
-								panel.add(new JLabel("Book Title:"));
-								JTextField textField = new JTextField(10);
-								panel.add(textField);
-
-								result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
-										 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-										 null, options1, null);
-								
-								if(result != 2)
+								int result = 1;
+								while(result == 1)
 								{
+									Object[] options1 = { "Submit", "Enter Another Book", "Cancel" };
+									JPanel panel = new JPanel();
 									
-									// Ask the user for the name of the person who is checking the book out
-									String owner = JOptionPane.showInputDialog(frame, "Enter Full Name: ");
-									if(owner.split(" ").length == 2)
+									// Ask the user for the book title
+									panel.add(new JLabel(" Book Title:"));
+									
+									JTextField textField = new JTextField(10);
+									panel.add(textField);
+
+									result = JOptionPane.showOptionDialog(null, panel, "Administrator", 
+											 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+											 null, options1, null);
+									
+									if(result != 2)
 									{
 										String input = textField.getText();
 										
@@ -431,22 +452,19 @@ public class Main
 											else JOptionPane.showMessageDialog(frame, "Book Already Checked Out!");
 										}
 										
-										else
-											JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
+										else JOptionPane.showMessageDialog(frame, "Book Does Not Exist!");
 										
-										library.check("out", credentials.staff, owner);
 										int size = library.getStackSize();
 										
 										if(result == 0 && size != 0)
 										{
-											//library.check("out", credentials.staff, owner);
+											library.check("out", credentials.staff, owner);
 											JOptionPane.showMessageDialog(frame, (size + " Book(s) Successfully Left The Building."));
 										}
 									}
-									
-									else JOptionPane.showMessageDialog(frame, "You Did Not Enter a Full Name!");
 								}
 							}
+							else if(owner != null) JOptionPane.showMessageDialog(frame, "You Did Not Enter a Full Name!");
 						}
 
 						// If admin clicked the emergency
