@@ -12,6 +12,7 @@ public class UserPassword
 	String[] masterUser = new String[2];
 	String[] usernameList = new String[10];
 	String[] passwordList = new String[10];
+	public String staff;
 
 	/* updateUser 		addUser
 	   updateMaster		removeUser */
