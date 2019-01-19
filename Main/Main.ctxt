@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Main
+comment1.params=
+comment1.target=void\ search()
+comment2.params=
+comment2.target=void\ printTable()
+comment3.params=name
+comment3.target=void\ printTable(Book)
+comment4.params=books
+comment4.target=void\ printTable(Tools.StacksQueues.List)
+comment5.params=books\ num
+comment5.target=void\ printTable(Tools.StacksQueues.List,\ int)
+comment6.params=name\ books\ num
+comment6.target=void\ printTable(Book,\ Tools.StacksQueues.List,\ int)
+comment7.params=args
+comment7.target=void\ main(java.lang.String[])
+numComments=8

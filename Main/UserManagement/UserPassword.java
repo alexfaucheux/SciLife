@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-
 import javax.swing.*;
 import java.awt.Dimension;
 
@@ -13,12 +12,6 @@ public class UserPassword
 	String[] masterUser = new String[2];
 	String[] usernameList = new String[10];
 	String[] passwordList = new String[10];
-	public String staff;
-
-	/* public static void main(String[] args) throws FileNotFoundException {
-
-		username_password();
-	} */
 
 	/* updateUser 		addUser
 	   updateMaster		removeUser */
@@ -27,12 +20,12 @@ public class UserPassword
 		int loop = 0;
 		File file = new File("Username&Password");
 		File file2 = new File("MasterUser");
-
+		Scanner sc = new Scanner(file);
 		Scanner sc1 = new Scanner(file2);
 
 		masterUser = sc1.nextLine().split(" ");
-		Scanner sc = new Scanner(file);
 		
+		// Makes password and username array
 		while (sc.hasNext())
 		{
 			String[] makeList = sc.nextLine().split(" ");
@@ -50,12 +43,15 @@ public class UserPassword
 		boolean correct = false;
 		int loginOpt = 0;
 
+		// Loops when username and password combination does not exist
 		while (loginOpt == 0) 
 		{
 			JTextField username = new JTextField();
 			JTextField password = new JPasswordField();
 			Object[] loginMessage = { "Username:", username, "Password:", password };
 			loginOpt = JOptionPane.showConfirmDialog(null, loginMessage, "Login", JOptionPane.OK_CANCEL_OPTION);
+			
+			// If user clicks OK
 			if (loginOpt == JOptionPane.OK_OPTION) {
 
 				// makes sure they entered something
@@ -83,7 +79,7 @@ public class UserPassword
 							break;
 						}
 					}
-
+					
 					if (correct && master) return "master";
 					else if(correct && !master) return "admin";
 					
@@ -100,30 +96,34 @@ public class UserPassword
 
 		
 	
-
+	// Runs if the user name and password is the master login
+	// and if the master user clicks "Manage Users"
 	public void displayOptions() throws FileNotFoundException
 	{
 		int masterOptResult = 0;
 		while (masterOptResult == 0 || masterOptResult == 1) {
 
-			// if the user name and password is the master it will go here
-			Object[] masterOPt = { "Add a new user", "Remove user", "Display Users", "back" };
+			
+			Object[] masterOPt = { "Add a new user", "Remove user", "Display Users", "Back" };
 			masterOptResult = JOptionPane.showOptionDialog(null, "Welcome Master", "Administrater",
 							  JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, masterOPt,
 							  masterOPt[0]);
 			
+			// Add user
 			if (masterOptResult == 0) 
 			{
 				addNewUser();
 				updateUser();
 			} 
 			
+			// Remove User
 			else if (masterOptResult == 1) 
 			{
 				removeUser();
 				updateUser();
 			}
 			
+			// Display Users
 			else if(masterOptResult == 2)
 			{
 				Object[][] rowData = new Object[usernameList.length][1];
@@ -151,7 +151,7 @@ public class UserPassword
 	}		
 
 							
-	
+	// Update user file if anything is added or removed
 	public void updateUser() throws FileNotFoundException {
 		String print_file = "";
 		for (int j = 0; j < usernameList.length; j++) {
@@ -167,6 +167,7 @@ public class UserPassword
 		outputStream.close();
 	}
 	
+	// For updating arrays for username or password
 	public void updateList(String[] list)
 	{ 
 		int k = -1;
@@ -177,19 +178,17 @@ public class UserPassword
 		}
 	}
 			
-		
+	
+	// For updating master
 	public void updateMaster() throws FileNotFoundException {
-		String print_file = "";
-		print_file += (masterUser[0] + " ");
-		print_file += (masterUser[1]);
-
+		String print_file = (masterUser[0] + " " + masterUser[1]);
 		String fileName = "MasterUser";
 		PrintWriter outputStream = new PrintWriter(fileName);
 		outputStream.println(print_file);
 		outputStream.close();
 	}
 	
-
+	// Remove a user, only ran by Master User with "Manage Users" option
 	public void removeUser() throws FileNotFoundException {
 		int remove_loginOpt = 0;
 		JTextField remove_username = new JTextField();
@@ -216,6 +215,9 @@ public class UserPassword
 						
 						else if (!enteredUsername.equals(""))
 						{
+							// If regular user was entered to be "removed"
+							// Master username & password is requested once more
+							// and user is removed if the user exists.
 							if (!enteredUsername.equals(masterUser[0])) 
 							{
 								boolean remove = false;
@@ -249,7 +251,9 @@ public class UserPassword
 								}
 							} 
 							
-							
+							// If master user was entered to be "removed"
+							// the user is prompted to add a user and make it
+							// the new master and former master is deleted
 							else if (enteredUsername.equals(masterUser[0])) {
 								int areUsure = JOptionPane.showConfirmDialog(null,
 										"Are you sure you want to change the master user?", "Master",
@@ -311,6 +315,7 @@ public class UserPassword
 		}
 	}
 
+	// Add a user, will only run by Master User by "Manage Users" option
 	public void addNewUser() {
 
 		// if the list of user's are full it will change to true and not allow you to
