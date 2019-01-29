@@ -1,5 +1,5 @@
  
-// Getters and setters for all the book objects  
+// Getters and setters for all the book objects	 
 public class Book
 {
 	String owner;
@@ -21,7 +21,7 @@ public class Book
 	
 	public String toString()
 	{
-		return ("Title:     " + title + "\nAuthor:    " + author + "\nStatus:    " + (status == 1 ? "In" : "Out") + "\nPriority:  " + imp);
+		return ("Title:		" + title + "\nAuthor:	  " + author + "\nStatus:	 " + (status == 1 ? "In" : "Out") + "\nPriority:  " + imp);
 	}
 	
 	

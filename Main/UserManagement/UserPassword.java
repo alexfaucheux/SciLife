@@ -14,7 +14,7 @@ public class UserPassword
 	String[] passwordList = new String[10];
 	public String staff;
 
-	/* updateUser 		addUser
+	/* updateUser		addUser
 	   updateMaster		removeUser */
 	   
 	public String username_password() throws FileNotFoundException {
