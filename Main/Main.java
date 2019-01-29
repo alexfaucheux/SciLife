@@ -343,7 +343,7 @@ public class Main
 					int adminOpt = 0;
 					
 					// Will continue until the user clicks back or the 'X' in the top right corner
-					while (adminOpt  == 0 || adminOpt == 1 || adminOpt == 2 || adminOpt == 3 || adminOpt == 4 || adminOpt == 5 || (adminOpt == 6 && type.equals("master")))
+					while (adminOpt	 == 0 || adminOpt == 1 || adminOpt == 2 || adminOpt == 3 || adminOpt == 4 || adminOpt == 5 || (adminOpt == 6 && type.equals("master")))
 					{
 						
 						// Checks if the user is the master or not 
@@ -494,7 +494,7 @@ public class Main
 				while (studentOpt  == 0 || studentOpt == 1 || studentOpt == 2)
 				{
 					studentOpt = JOptionPane.showOptionDialog( null, "What would you like to do?", "SciFiL", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options3, options3[1]);
-					if (studentOpt  == 0 || studentOpt == 1)
+					if (studentOpt	== 0 || studentOpt == 1)
 					{
 						String sortby = (studentOpt == 0 ? "title" : "author");
 						library.books = library.mod.quickSort(library.books, sortby);

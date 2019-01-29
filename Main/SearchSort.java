@@ -8,20 +8,20 @@ class SearchSort
 	// Performs a quick sort operation based on token parameter
 	// Options for token are: title, author, or importance
 	public List<Book> quickSort(List<Book> books, String token)
-    {
-        if((books.GetSize() == 1) || (books.IsEmpty()))
-            return books;
+	{
+		if((books.GetSize() == 1) || (books.IsEmpty()))
+			return books;
 
-        String pivotToken = "";
-        String booksToken = "";
+		String pivotToken = "";
+		String booksToken = "";
 
-        Book pivot;
-        List<Book> lessThan = new List<Book>();
-        List<Book> greaterThan = new List<Book>();
-        books.Last();
-        pivot = books.GetValue();
+		Book pivot;
+		List<Book> lessThan = new List<Book>();
+		List<Book> greaterThan = new List<Book>();
+		books.Last();
+		pivot = books.GetValue();
 
-        books.First();
+		books.First();
 		if(token.equals("importance"))
 		{
 			if(pivot.getStatus() == 0)
@@ -36,40 +36,40 @@ class SearchSort
 				books.First();
 			}
 			for(int j = 0; j < books.GetSize()-1; j++, books.Next())
-	        {
+			{
 				if(books.GetValue().getStatus() != 0)
 				{
-		            if(pivot.getImportance() > books.GetValue().getImportance())
-		                lessThan.InsertAfter(books.GetValue());
-		            else if(pivot.getImportance() < books.GetValue().getImportance())
-		                greaterThan.InsertAfter(books.GetValue());
-		            else
-		                lessThan.InsertAfter(books.GetValue());
+					if(pivot.getImportance() > books.GetValue().getImportance())
+						lessThan.InsertAfter(books.GetValue());
+					else if(pivot.getImportance() < books.GetValue().getImportance())
+						greaterThan.InsertAfter(books.GetValue());
+					else
+						lessThan.InsertAfter(books.GetValue());
 				}
-	        }
+			}
 		}
 		else
 		{
-	        for(int j = 0; j < books.GetSize()-1; j++, books.Next())
-	        {
-	            if(token.equals("title")) {pivotToken = pivot.getTitle(); booksToken = books.GetValue().getTitle();}
-	            else if(token.equals("author")) {pivotToken = pivot.getAuthor(); booksToken = books.GetValue().getAuthor();}
+			for(int j = 0; j < books.GetSize()-1; j++, books.Next())
+			{
+				if(token.equals("title")) {pivotToken = pivot.getTitle(); booksToken = books.GetValue().getTitle();}
+				else if(token.equals("author")) {pivotToken = pivot.getAuthor(); booksToken = books.GetValue().getAuthor();}
 
-	            if(pivotToken.compareTo(booksToken) > 0)
-	                lessThan.InsertAfter(books.GetValue());
-	            else if(pivotToken.compareTo(booksToken) < 0)
-	                greaterThan.InsertAfter(books.GetValue());
-	            else
-	                lessThan.InsertAfter(books.GetValue());
-	        }
+				if(pivotToken.compareTo(booksToken) > 0)
+					lessThan.InsertAfter(books.GetValue());
+				else if(pivotToken.compareTo(booksToken) < 0)
+					greaterThan.InsertAfter(books.GetValue());
+				else
+					lessThan.InsertAfter(books.GetValue());
+			}
 		}
 
-        lessThan = quickSort(lessThan, token);
-        greaterThan = quickSort(greaterThan, token);
-        lessThan.InsertAfter(pivot);
-        lessThan = lessThan.Add(greaterThan);
-        return lessThan;
-    }
+		lessThan = quickSort(lessThan, token);
+		greaterThan = quickSort(greaterThan, token);
+		lessThan.InsertAfter(pivot);
+		lessThan = lessThan.Add(greaterThan);
+		return lessThan;
+	}
 
 	// Searches the list of books for any books containing a specified
 	// substring
