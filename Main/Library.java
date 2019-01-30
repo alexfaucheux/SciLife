@@ -1,6 +1,4 @@
 /*
-Last modified: 1/29/2019
-
 	Data Structures Used:
 		Stack - Used to emulate returning/checking out books, books being returned/checked out
 			by a user are added to a stack, so the librarian must check books in/out from the top
