@@ -46,7 +46,7 @@ public class Library
 	}
 
 	// Prints current state of library to console.
-	// Also used to return current state of library.
+	// Also used to return current state of library
 	// Avoids printing to console when print == false.
 	public String[][] printLibrary(boolean print)
 	{
@@ -71,27 +71,27 @@ public class Library
 		}
 
 		if(print) 
-		{
 			System.out.println("Title:" + repeat(largestTitle.length() - "Titles:".length() + 3, " ") +
 								"Author:" + repeat(largestAuthor.length() - "Author:".length() + 1, " ") +
 								"Checked In/Out:	 Importance:\n");
-			// Prints 2d array
-			for(int i=0; i<library.length; i++)
+		
+		// Prints 2d array (if print == true).
+		// Also modifies library where status 1/0 becomes In/Out
+		for(int i=0; i<library.length; i++)
+		{
+			for(int k=0; k<4; k++)
 			{
-				for(int k=0; k<4; k++)
-				{
-					String spacing = " ";
-					if(k == 0) spacing = repeat(largestTitle.length() - library[i][k].length() + 2, " ");
-					if(k == 1) spacing = repeat(largestAuthor.length() - library[i][k].length() + 1, " ");
-					if(k == 2) {spacing = repeat("Checked In/Out:".length() - library[i][k].length() + 2, " ");
-								if(library[i][k].equals("1")) library[i][k] = "In ";
-								if(library[i][k].equals("0")) library[i][k] = "Out";
-								}
+				String spacing = " ";
+				if(k == 0) spacing = repeat(largestTitle.length() - library[i][k].length() + 2, " ");
+				if(k == 1) spacing = repeat(largestAuthor.length() - library[i][k].length() + 1, " ");
+				if(k == 2) {spacing = repeat("Checked In/Out:".length() - library[i][k].length() + 2, " ");
+							if(library[i][k].equals("1")) library[i][k] = "In ";
+							if(library[i][k].equals("0")) library[i][k] = "Out";
+							}
 
-					System.out.print(library[i][k] + spacing);
-				}
-				System.out.println(" ");
+				if(print) System.out.print(library[i][k] + spacing);
 			}
+			if(print) System.out.println(" ");
 		}
 
 		return library;
