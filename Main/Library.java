@@ -1,4 +1,6 @@
 /*
+Last modified: 1/29/2019
+
 	Data Structures Used:
 		Stack - Used to emulate returning/checking out books, books being returned/checked out
 			by a user are added to a stack, so the librarian must check books in/out from the top
@@ -43,7 +45,9 @@ public class Library
 		return printLibrary(true);
 	}
 
-	// Prints current state of library, boolean print changes whether method prints to console or not
+	// Prints current state of library to console.
+	// Also used to return current state of library.
+	// Avoids printing to console when print == false.
 	public String[][] printLibrary(boolean print)
 	{
 		String[][] library = new String[books.GetSize()][6];
@@ -66,25 +70,28 @@ public class Library
 			if(currAuthor.length() > largestAuthor.length()) largestAuthor = currAuthor;
 		}
 
-		if(print) System.out.println("Title:" + repeat(largestTitle.length() - "Titles:".length() + 3, " ") +
-									 "Author:" + repeat(largestAuthor.length() - "Author:".length() + 1, " ") +
-									 "Checked In/Out:	 Importance:\n");
-		// Prints 2d array
-		for(int i=0; i<library.length; i++)
+		if(print) 
 		{
-			for(int k=0; k<4; k++)
+			System.out.println("Title:" + repeat(largestTitle.length() - "Titles:".length() + 3, " ") +
+								"Author:" + repeat(largestAuthor.length() - "Author:".length() + 1, " ") +
+								"Checked In/Out:	 Importance:\n");
+			// Prints 2d array
+			for(int i=0; i<library.length; i++)
 			{
-				String spacing = " ";
-				if(k == 0) spacing = repeat(largestTitle.length() - library[i][k].length() + 2, " ");
-				if(k == 1) spacing = repeat(largestAuthor.length() - library[i][k].length() + 1, " ");
-				if(k == 2) {spacing = repeat("Checked In/Out:".length() - library[i][k].length() + 2, " ");
-							if(library[i][k].equals("1")) library[i][k] = "In ";
-							if(library[i][k].equals("0")) library[i][k] = "Out";
-							}
+				for(int k=0; k<4; k++)
+				{
+					String spacing = " ";
+					if(k == 0) spacing = repeat(largestTitle.length() - library[i][k].length() + 2, " ");
+					if(k == 1) spacing = repeat(largestAuthor.length() - library[i][k].length() + 1, " ");
+					if(k == 2) {spacing = repeat("Checked In/Out:".length() - library[i][k].length() + 2, " ");
+								if(library[i][k].equals("1")) library[i][k] = "In ";
+								if(library[i][k].equals("0")) library[i][k] = "Out";
+								}
 
-				if(print) System.out.print(library[i][k] + spacing);
+					System.out.print(library[i][k] + spacing);
+				}
+				System.out.println(" ");
 			}
-			if(print) System.out.println(" ");
 		}
 
 		return library;
