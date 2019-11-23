@@ -1,4 +1,4 @@
-1984, Orwell, 1, 85,  ,  , 
+1984, Orwell, 0, 85, Aaron Taylor, Lori, 
 20,000 Leagues Under The Sea, Verne, 1, 31,  ,  , 
 2001: A Space Odyssey, ClarkeA, 1, 84,  ,  , 
 Alas Babylon, Frank, 0, 71, Peter Cairns, Lori, 

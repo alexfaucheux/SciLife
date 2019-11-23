@@ -9,9 +9,9 @@ import java.awt.Dimension;
 
 public class UserPassword 
 {
-	String[] masterUser = new String[2];
-	String[] usernameList = new String[10];
-	String[] passwordList = new String[10];
+	private String[] masterUser = new String[2];
+	private String[] usernameList = new String[10];
+	private String[] passwordList = new String[10];
 	public String staff;
 
 	/* updateUser		addUser
@@ -302,7 +302,7 @@ public class UserPassword
 						} else if (enteredUsername.equals(""))
 							JOptionPane.showMessageDialog(null, "Nothing was entered please try again");
 					}
-					remove_user = 0;
+
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"The master username or password was incorrect \nPlease try again");
@@ -317,7 +317,7 @@ public class UserPassword
 	}
 
 	// Add a user, will only run by Master User by "Manage Users" option
-	public void addNewUser() {
+	private void addNewUser() {
 
 		// if the list of user's are full it will change to true and not allow you to
 		// add another

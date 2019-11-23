@@ -2,12 +2,12 @@
 // Getters and setters for all the book objects	 
 public class Book
 {
-	String owner;
-	String author;
-	String title;
-	String staff;
-	int status;
-	int imp;
+	private String owner;
+	private String author;
+	private String title;
+	private String staff;
+	private int status;
+	private int imp;
 	
 	public Book(String title, String author, int status, int imp, String owner, String staff)
 	{
@@ -25,47 +25,47 @@ public class Book
 	}
 	
 	
-	public String getAuthor()
+	String getAuthor()
 	{
 		return author;
 	}
 	
-	public String getTitle()
+	String getTitle()
 	{
 		return title;
 	}
 	
-	public int getStatus()
+	int getStatus()
 	{
 		return status;
 	}
 	
-	public void setStatus(int status)
+	void setStatus(int status)
 	{
 		this.status = status;
 	}
-	
-	public int getImportance()
+
+	int getImportance()
 	{
 		return imp;
 	}
 	
-	public String getOwner()
+	String getOwner()
 	{
 		return owner;
 	}
 	
-	public void setOwner(String owner)
+	void setOwner(String owner)
 	{
 		this.owner = owner;
 	}
 	
-	public String getStaff()
+	String getStaff()
 	{
 		return staff;
 	}
 	
-	public void setStaff(String staff)
+	void setStaff(String staff)
 	{
 		this.staff = staff;
 	}
