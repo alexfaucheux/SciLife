@@ -15,30 +15,24 @@ Date last modified: 11/9/2018
 		2D Array - Used to make a table of book properties in order to facilitate printing the
 			library both to the console and to a GUI.
 */
-
-
-import Tools.*;
 import Tools.StacksQueues.*;
 import UserManagement.*;
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
-import javafx.scene.control.TableColumn;
 
 
 public class Main
 {
 	// List<Type> is a custom Linked List class
-	static List<String> title = new List<String>();
 	static Library library = new Library();
 	
 	// Searches the list of books by title or/and author and displays the results.
 	// it also can display a partial title search. 
-	public void search() throws IOException
+	void search() throws IOException
 	{
 		
 		// Ask for the title or/and author the user is looking for
@@ -62,7 +56,6 @@ public class Main
 			{
 				 boolean AuthorExist = false;
 				 boolean BookExist = false;
-				 boolean checkedIn = true;
 				 
 				 // Searches for all the books matches the author the user inputed and stores it in a linked list 
 				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
@@ -102,12 +95,11 @@ public class Main
 				 }
 			}
 		 
-			// If the user only inputed a title 
-			// it searches for all the title for what the inputed
+			// If the user only inputs a title
 			else if(!Title.getText().equals(""))
 			{
 				
-				// finds and saves all the titles that is related to what the user inputed in books
+				// finds and saves all the titles that is related to what the user inputs
 				List<Book> books = library.mod.partialSearch(Title.getText(), library.books);
 				List<Book> checkedIn = new List<Book>();
 				 
@@ -133,11 +125,11 @@ public class Main
 				}
 			}
 			
-			// If the user only inputed an author 
+			// If the user only inputs an author
 			else if(!Author.getText().equals(""))
 			{
 				
-				 // Buts all the books that mathch the user input in a list of books
+				 // Buts all the books that match the user input in a list of books
 				 List<Book> books = library.mod.booksByAuthor(Author.getText(), library.books);
 				 if(!books.IsEmpty())
 				 {
@@ -265,7 +257,7 @@ public class Main
 	}
 	
 	// Main
-	public static void main(String[] args) throws FileNotFoundException, IOException
+	public static void main(String[] args) throws IOException
 	{
 		Main main = new Main();
 		UserPassword credentials = new UserPassword();
@@ -498,7 +490,6 @@ public class Main
 					{
 						String sortby = (studentOpt == 0 ? "title" : "author");
 						library.books = library.mod.quickSort(library.books, sortby);
-						String[][]rowData = library.printLibrary(false);
 						main.printTable();
 					}
 					
